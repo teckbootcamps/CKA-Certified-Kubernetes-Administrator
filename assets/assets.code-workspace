@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "assets",
+			"path": "."
+		},
+		{
+			"name": "CKA-Certified-Kubernetes-Administrator",
+			"path": "../../CKA-Certified-Kubernetes-Administrator"
+		}
+	],
+	"settings": {}
+}
