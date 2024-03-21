@@ -116,6 +116,44 @@ Kubectl Autocomplete
 source <(kubectl completion bash)
 ```
 
+## TIPS
+
+* 💬 Be fast
+Use the history command to reuse already entered commands or use even faster history search through Ctrl r .
+
+If a command takes some time to execute, like sometimes kubectl delete pod x. You can put a task in the background using Ctrl z and pull it back into foreground running command fg.
+
+You can delete pods fast with:
+
+``` bash
+k delete pod x --grace-period 0 --force
+
+k delete pod x $now # if export from above is configured
+```
+
+* 💬 Vim
+
+Be great with vim.
+
+toggle vim line numbers
+
+When in vim you can press Esc and type :set number or :set nonumber followed by Enter to toggle line numbers. This can be useful when finding syntax errors based on line - but can be bad when wanting to mark&copy by mouse. You can also just jump to a line number with Esc :22 + Enter.
+
+copy&paste
+
+Get used to copy/paste/cut with vim:
+
+``` shell
+Mark lines: Esc+V (then arrow keys)
+Copy marked lines: y
+Cut marked lines: d
+Past lines: p or P
+Indent multiple lines
+```
+
+To indent multiple lines press Esc and type :set shiftwidth=2. First mark multiple lines using Shift v and the up/down keys. Then to indent the marked lines press > or <. You can then press . to repeat the action.
+
+
 # 💬 Share To Your Network
 If this repo has helped you in any way, feel free to share !
 
