@@ -656,8 +656,658 @@ Sat Dec  7 16:05:16 UTC 2077
  
 
 
+## Create Secret and mount into Pod
+
+Do the following in a new Namespace secret. Create a Pod named secret-pod of image busybox:1.31.1 which should keep running for some time. It should be able to run on master nodes as well, create the proper toleration.
+
+There is an existing Secret located at /opt/course/19/secret1.yaml, create it in the secret Namespace and mount it readonly into the Pod at /tmp/secret1.
+
+Create a new Secret in Namespace secret called secret2 which should contain user=user1 and pass=1234. These entries should be available inside the Pod's container as environment variables APP_USER and APP_PASS.
+
+Confirm everything is working.
+<details><summary>Show Answer</summary>
+<p>
+
+First we create the Namespace and the requested Secrets in it:
+
+``` bash
+k create ns secret
+cp /opt/course/19/secret1.yaml 19_secret1.yaml
+vim 19_secret1.yaml
+```
+
+We need to adjust the Namespace for that Secret:
+
+``` yaml
+# 19_secret1.yaml
+apiVersion: v1
+data:
+  halt: IyEgL2Jpbi9zaAo...
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: secret1
+  namespace: secret           # change
+
+```
+``` bash
+k -f 19_secret1.yaml create
+```
+
+Next we create the second Secret:
+``` bash
+k -n secret create secret generic secret2 --from-literal=user=user1 --from-literal=pass=1234
+```
 
 
+Now we create the Pod template:
+``` bash
+k -n secret run secret-pod --image=busybox:1.31.1 $do -- sh -c "sleep 5d" > 19.yaml
+vim 19.yaml
+
+```
+
+Then make the necessary changes:
+
+``` yaml
+# 19.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: secret-pod
+  name: secret-pod
+  namespace: secret                       # add
+spec:
+  tolerations:                            # add
+  - effect: NoSchedule                    # add
+    key: node-role.kubernetes.io/master   # add
+  containers:
+  - args:
+    - sh
+    - -c
+    - sleep 1d
+    image: busybox:1.31.1
+    name: secret-pod
+    resources: {}
+    env:                                  # add
+    - name: APP_USER                      # add
+      valueFrom:                          # add
+        secretKeyRef:                     # add
+          name: secret2                   # add
+          key: user                       # add
+    - name: APP_PASS                      # add
+      valueFrom:                          # add
+        secretKeyRef:                     # add
+          name: secret2                   # add
+          key: pass                       # add
+    volumeMounts:                         # add
+    - name: secret1                       # add
+      mountPath: /tmp/secret1             # add
+      readOnly: true                      # add
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  volumes:                                # add
+  - name: secret1                         # add
+    secret:                               # add
+      secretName: secret1                 # add
+status: {}
+
+```
+
+It might not be necessary in current K8s versions to specify the readOnly: true because it's the default setting anyways.
+And execute:
+```  bash
+k -f 19.yaml create
+```
+Finally we check if all is correct:
+
+``` bash
+k -n secret exec secret-pod -- env | grep APP
+APP_PASS=1234
+APP_USER=user1
+k -n secret exec secret-pod -- find /tmp/secret1
+/tmp/secret1
+/tmp/secret1/..data
+/tmp/secret1/halt
+/tmp/secret1/..2019_12_08_12_15_39.463036797
+/tmp/secret1/..2019_12_08_12_15_39.463036797/halt
+k -n secret exec secret-pod -- cat /tmp/secret1/halt
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          halt
+# Required-Start:
+# Required-Stop:
+# Default-Start:
+# Default-Stop:      0
+# Short-Description: Execute the halt command.
+# Description:
+...
+```
+</p>
+</details>
+
+
+## Update Kubernetes Version and join cluster
+
+Your coworker said node cluster3-worker2 is running an older Kubernetes version and is not even part of the cluster. Update Kubernetes on that node to the exact version that's running on cluster3-master1. Then add this node to the cluster. Use kubeadm for this
+
+<details><summary>Show Answer</summary>
+<p>
+
+Upgrade Kubernetes to cluster3-master1 version
+Search in the docs for kubeadm upgrade: https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade
+
+``` bash
+➜ k get node
+NAME               STATUS     ROLES                  AGE    VERSION
+cluster3-master1   Ready      control-plane,master   116m   v1.23.1
+cluster3-worker1   NotReady   <none>                 112m   v1.23.1
+Master node seems to be running Kubernetes 1.23.1 and cluster3-worker2 is not yet part of the cluster.
+
+➜ ssh cluster3-worker2
+
+➜ root@cluster3-worker2:~# kubeadm version
+kubeadm version: &version.Info{Major:"1", Minor:"23", GitVersion:"v1.23.1", GitCommit:"86ec240af8cbd1b60bcc4c03c20da9b98005b92e", GitTreeState:"clean", BuildDate:"2021-12-16T11:39:51Z", GoVersion:"go1.17.5", Compiler:"gc", Platform:"linux/amd64"}
+
+➜ root@cluster3-worker2:~# kubectl version
+Client Version: version.Info{Major:"1", Minor:"22", GitVersion:"v1.22.4", GitCommit:"b695d79d4f967c403a96986f1750a35eb75e75f1", GitTreeState:"clean", BuildDate:"2021-11-17T15:48:33Z", GoVersion:"go1.16.10", Compiler:"gc", Platform:"linux/amd64"}
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+
+➜ root@cluster3-worker2:~# kubelet --version
+Kubernetes v1.22.4
+Here kubeadm is already installed in the wanted version, so we can run:
+
+➜ root@cluster3-worker2:~# kubeadm upgrade node
+couldn't create a Kubernetes client from file "/etc/kubernetes/kubelet.conf": failed to load admin kubeconfig: open /etc/kubernetes/kubelet.conf: no such file or directory
+To see the stack trace of this error execute with --v=5 or higher
+This is usually the proper command to upgrade a node. But this error means that this node was never even initialised, so nothing to update here. This will be done later using kubeadm join. For now we can continue with kubelet and kubectl:
+
+➜ root@cluster3-worker2:~# apt update
+...
+Fetched 5,775 kB in 2s (2,313 kB/s)                               
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+90 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+➜ root@cluster3-worker2:~# apt show kubectl -a | grep 1.23
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+Version: 1.23.1-00
+Version: 1.23.0-00
+
+➜ root@cluster3-worker2:~# apt install kubectl=1.23.1-00 kubelet=1.23.1-00
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages will be upgraded:
+  kubectl kubelet
+2 upgraded, 0 newly installed, 0 to remove and 88 not upgraded.
+Need to get 28.4 MB of archives.
+After this operation, 2,976 kB of additional disk space will be used.
+Get:1 https://packages.cloud.google.com/apt kubernetes-xenial/main amd64 kubectl amd64 1.23.1-00 [8,928 kB]
+Get:2 https://packages.cloud.google.com/apt kubernetes-xenial/main amd64 kubelet amd64 1.23.1-00 [19.5 MB]
+Fetched 28.4 MB in 2s (17.9 MB/s)  
+(Reading database ... 111951 files and directories currently installed.)
+Preparing to unpack .../kubectl_1.23.1-00_amd64.deb ...
+Unpacking kubectl (1.23.1-00) over (1.22.4-00) ...
+Preparing to unpack .../kubelet_1.23.1-00_amd64.deb ...
+Unpacking kubelet (1.23.1-00) over (1.22.4-00) ...
+Setting up kubectl (1.23.1-00) ...
+Setting up kubelet (1.23.1-00) ...
+
+➜ root@cluster3-worker2:~# kubelet --version
+Kubernetes v1.23.1
+Now we're up to date with kubeadm, kubectl and kubelet. Restart the kubelet:
+
+➜ root@cluster3-worker2:~# systemctl restart kubelet
+
+➜ root@cluster3-worker2:~# service kubelet status
+XXX
+```
+
+We can ignore the errors and move into next step to generate the join command.
+
+Add cluster3-master2 to cluster
+First we log into the master1 and generate a new TLS bootstrap token, also printing out the join command:
+
+``` bash
+➜ ssh cluster3-master1
+
+➜ root@cluster3-master1:~# kubeadm token create --print-join-command
+kubeadm join 192.168.100.31:6443 --token leqq1l.1hlg4rw8mu7brv73 --discovery-token-ca-cert-hash sha256:2e2c3407a256fc768f0d8e70974a8e24d7b9976149a79bd08858c4d7aa2ff79a
+
+➜ root@cluster3-master1:~# kubeadm token list
+TOKEN                     TTL         EXPIRES                ...
+mnkpfu.d2lpu8zypbyumr3i   23h         2020-05-01T22:43:45Z   ...
+poa13f.hnrs6i6ifetwii75   <forever>   <never>                ...
+``` 
+
+We see the expiration of 23h for our token, we could adjust this by passing the ttl argument.
+Next we connect again to worker2 and simply execute the join command:
+
+``` bash
+➜ ssh cluster3-worker2
+
+➜ root@cluster3-worker2:~# kubeadm join 192.168.100.31:6443 --token leqq1l.1hlg4rw8mu7brv73 --discovery-token-3c9cf14535ebfac8a23a91132b75436b36df2c087aa99c433f79d531
+[preflight] Running pre-flight checks
+[preflight] Reading configuration from the cluster...
+[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+W0107 13:37:31.116994   37798 utils.go:69] The recommended value for "resolvConf" in "KubeletConfiguration" is: /run/systemd/resolve/resolv.conf; the provided value is: /run/systemd/resolve/resolv.conf
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Starting the kubelet
+[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
+```
+
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+
+``` bash
+➜ root@cluster3-worker2:~# service kubelet status
+● kubelet.service - kubelet: The Kubernetes Node Agent
+     Loaded: loaded (/lib/systemd/system/kubelet.service; enabled; vendor preset: enabled)
+    Drop-In: /etc/systemd/system/kubelet.service.d
+             └─10-kubeadm.conf
+     Active: active (running) since Wed 2021-09-15 17:12:32 UTC; 42s ago
+       Docs: https://kubernetes.io/docs/home/
+   Main PID: 24771 (kubelet)
+      Tasks: 13 (limit: 467)
+     Memory: 68.0M
+     CGroup: /system.slice/kubelet.service
+             └─24771 /usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kuber>
+If you have troubles with kubeadm join you might need to run kubeadm reset.
+
+```
+
+This looks great though for us. Finally we head back to the main terminal and check the node status:
+
+``` bash
+➜ k get node
+NAME               STATUS    ROLES                   AGE    VERSION
+cluster3-master1   Ready      control-plane,master   24h   v1.23.1
+cluster3-worker1   Ready      <none>                 24h   v1.23.1
+cluster3-worker2   NotReady   <none>                 32s   v1.23.1
+Give it a bit of time till the node is ready.
+
+➜ k get node
+NAME               STATUS   ROLES                  AGE    VERSION
+cluster3-master1   Ready    control-plane,master   24h    v1.23.1
+cluster3-worker1   Ready    <none>                 24h    v1.23.1
+cluster3-worker2   Ready    <none>                 107s   v1.23.1
+```
+We see cluster3-worker2 is now available and up to date.
+
+</p>
+</details>
+ 
+## NetworkPolicy
+
+There was a security incident where an intruder was able to access the whole cluster from a single hacked backend Pod.
+
+To prevent this create a NetworkPolicy called np-backend in Namespace project-snake. It should allow the backend-* Pods only to:
+
+connect to db1-* Pods on port 1111
+connect to db2-* Pods on port 2222
+Use the app label of Pods in your policy.
+
+After implementation, connections from backend-* Pods to vault-* Pods on port 3333 should for example no longer work.
+
+<details><summary>Show Answer</summary>
+<p>
+
+First we look at the existing Pods and their labels:
+
+``` bash
+➜ k -n project-snake get pod
+NAME        READY   STATUS    RESTARTS   AGE
+backend-0   1/1     Running   0          8s
+db1-0       1/1     Running   0          8s
+db2-0       1/1     Running   0          10s
+vault-0     1/1     Running   0          10s
+
+➜ k -n project-snake get pod -L app
+NAME        READY   STATUS    RESTARTS   AGE     APP
+backend-0   1/1     Running   0          3m15s   backend
+db1-0       1/1     Running   0          3m15s   db1
+db2-0       1/1     Running   0          3m17s   db2
+vault-0     1/1     Running   0          3m17s   vault
+``` 
+We test the current connection situation and see nothing is restricted:
+
+```  bash
+➜ k -n project-snake get pod -o wide
+NAME        READY   STATUS    RESTARTS   AGE     IP          ...
+backend-0   1/1     Running   0          4m14s   10.44.0.24  ...
+db1-0       1/1     Running   0          4m14s   10.44.0.25  ...
+db2-0       1/1     Running   0          4m16s   10.44.0.23  ...
+vault-0     1/1     Running   0          4m16s   10.44.0.22  ...
+
+➜ k -n project-snake exec backend-0 -- curl -s 10.44.0.25:1111
+database one
+
+➜ k -n project-snake exec backend-0 -- curl -s 10.44.0.23:2222
+database two
+
+➜ k -n project-snake exec backend-0 -- curl -s 10.44.0.22:3333
+vault secret storage
+``` 
+
+Now we create the NP by copying and chaning an example from the k8s docs:
+
+```  bash
+vim 24_np.yaml
+``` 
+```  yaml
+# 24_np.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np-backend
+  namespace: project-snake
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+    - Egress                    # policy is only about Egress
+  egress:
+    -                           # first rule
+      to:                           # first condition "to"
+      - podSelector:
+          matchLabels:
+            app: db1
+      ports:                        # second condition "port"
+      - protocol: TCP
+        port: 1111
+    -                           # second rule
+      to:                           # first condition "to"
+      - podSelector:
+          matchLabels:
+            app: db2
+      ports:                        # second condition "port"
+      - protocol: TCP
+        port: 2222
+
+``` 
+
+The NP above has two rules with two conditions each, it can be read as:
+
+allow outgoing traffic if:
+  (destination pod has label app=db1 AND port is 1111)
+  OR
+  (destination pod has label app=db2 AND port is 2222)
  
 
+Wrong example
+Now let's shortly look at a wrong example:
 
+``` yaml
+# WRONG
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np-backend
+  namespace: project-snake
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+    - Egress
+  egress:
+    -                           # first rule
+      to:                           # first condition "to"
+      - podSelector:                    # first "to" possibility
+          matchLabels:
+            app: db1
+      - podSelector:                    # second "to" possibility
+          matchLabels:
+            app: db2
+      ports:                        # second condition "ports"
+      - protocol: TCP                   # first "ports" possibility
+        port: 1111
+      - protocol: TCP                   # second "ports" possibility
+        port: 2222
+``` 
+
+The NP above has one rule with two conditions and two condition-entries each, it can be read as:
+
+allow outgoing traffic if:
+  (destination pod has label app=db1 OR destination pod has label app=db2)
+  AND
+  (destination port is 1111 OR destination port is 2222)
+Using this NP it would still be possible for backend-* Pods to connect to db2-* Pods on port 1111 for example which should be forbidden.
+
+
+Create NetworkPolicy
+We create the correct NP:
+
+```  bash
+k -f 24_np.yaml create
+``` 
+
+And test again:
+
+``` bash
+➜ k -n project-snake exec backend-0 -- curl -s 10.44.0.25:1111
+database one
+
+➜ k -n project-snake exec backend-0 -- curl -s 10.44.0.23:2222
+database two
+
+➜ k -n project-snake exec backend-0 -- curl -s 10.44.0.22:3333
+^C
+``` 
+
+Also helpful to use kubectl describe on the NP to see how k8s has interpreted the policy.
+
+</p>
+</details>
+
+
+##  Etcd Snapshot Save and Restore
+
+Make a backup of etcd running on cluster3-master1 and save it on the master node at /tmp/etcd-backup.db.
+
+Then create a Pod of your kind in the cluster.
+
+Finally restore the backup, confirm the cluster is still working and that the created Pod is no longer with us.
+
+
+<details><summary>Show Answer</summary>
+<p>
+
+### Etcd Backup
+First we log into the master and try to create a snapshop of etcd:
+
+``` bash
+➜ ssh cluster3-master1
+
+➜ root@cluster3-master1:~# ETCDCTL_API=3 etcdctl snapshot save /tmp/etcd-backup.db
+Error:  rpc error: code = Unavailable desc = transport is closing
+``` 
+
+But it fails because we need to authenticate ourselves. For the necessary information we can check the etc manifest:
+
+```  bash
+➜ root@cluster3-master1:~# vim /etc/kubernetes/manifests/etcd.yaml
+``` 
+
+We only check the etcd.yaml for necessary information we don't change it.
+
+```  yaml
+# /etc/kubernetes/manifests/etcd.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    component: etcd
+    tier: control-plane
+  name: etcd
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - etcd
+    - --advertise-client-urls=https://192.168.100.31:2379
+    - --cert-file=/etc/kubernetes/pki/etcd/server.crt                           # use
+    - --client-cert-auth=true
+    - --data-dir=/var/lib/etcd
+    - --initial-advertise-peer-urls=https://192.168.100.31:2380
+    - --initial-cluster=cluster3-master1=https://192.168.100.31:2380
+    - --key-file=/etc/kubernetes/pki/etcd/server.key                            # use
+    - --listen-client-urls=https://127.0.0.1:2379,https://192.168.100.31:2379   # use
+    - --listen-metrics-urls=http://127.0.0.1:2381
+    - --listen-peer-urls=https://192.168.100.31:2380
+    - --name=cluster3-master1
+    - --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+    - --peer-client-cert-auth=true
+    - --peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+    - --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt                    # use
+    - --snapshot-count=10000
+    - --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+    image: k8s.gcr.io/etcd:3.3.15-0
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 8
+      httpGet:
+        host: 127.0.0.1
+        path: /health
+        port: 2381
+        scheme: HTTP
+      initialDelaySeconds: 15
+      timeoutSeconds: 15
+    name: etcd
+    resources: {}
+    volumeMounts:
+    - mountPath: /var/lib/etcd
+      name: etcd-data
+    - mountPath: /etc/kubernetes/pki/etcd
+      name: etcd-certs
+  hostNetwork: true
+  priorityClassName: system-cluster-critical
+  volumes:
+  - hostPath:
+      path: /etc/kubernetes/pki/etcd
+      type: DirectoryOrCreate
+    name: etcd-certs
+  - hostPath:
+      path: /var/lib/etcd                                                     # important
+      type: DirectoryOrCreate
+    name: etcd-data
+status: {}
+``` 
+
+But we also know that the api-server is connecting to etcd, so we can check how its manifest is configured:
+
+```  bash
+➜ root@cluster3-master1:~# cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep etcd
+    - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
+    - --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+    - --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
+    - --etcd-servers=https://127.0.0.1:2379
+``` 
+
+We use the authentication information and pass it to etcdctl:
+
+```  bash
+➜ root@cluster3-master1:~# ETCDCTL_API=3 etcdctl snapshot save /tmp/etcd-backup.db \
+--cacert /etc/kubernetes/pki/etcd/ca.crt \
+--cert /etc/kubernetes/pki/etcd/server.crt \
+--key /etc/kubernetes/pki/etcd/server.key
+
+Snapshot saved at /tmp/etcd-backup.db
+``` 
+
+NOTE: Dont use snapshot status because it can alter the snapshot file and render it invalid
+
+
+### Etcd restore
+Now create a Pod in the cluster and wait for it to be running:
+
+``` bash
+root@cluster3-master1:~# kubectl run test --image=nginx
+pod/test created
+
+root@cluster3-master1:~# kubectl get pod -l run=test -w
+NAME   READY   STATUS    RESTARTS   AGE
+test   1/1     Running   0          60s
+``` 
+
+NOTE: If you didn't solve questions 18 or 20 and cluster3 doesn't have a ready worker node then the created pod might stay in a Pending state. This is still ok for this task.
+
+Next we stop all controlplane components:
+
+``` bash
+root@cluster3-master1:~# cd /etc/kubernetes/manifests/
+
+root@cluster3-master1:/etc/kubernetes/manifests# mv * ..
+
+root@cluster3-master1:/etc/kubernetes/manifests# watch crictl ps
+``` 
+
+Now we restore the snapshot into a specific directory:
+
+``` bash
+➜ root@cluster3-master1:~# ETCDCTL_API=3 etcdctl snapshot restore /tmp/etcd-backup.db \
+--data-dir /var/lib/etcd-backup \
+--cacert /etc/kubernetes/pki/etcd/ca.crt \
+--cert /etc/kubernetes/pki/etcd/server.crt \
+--key /etc/kubernetes/pki/etcd/server.key
+
+2020-09-04 16:50:19.650804 I | mvcc: restore compact to 9935
+2020-09-04 16:50:19.659095 I | etcdserver/membership: added member 8e9e05c52164694d [http://localhost:2380] to cluster cdf818194e3a8c32
+We could specify another host to make the backup from by using etcdctl --endpoints http://IP, but here we just use the default value which is: http://127.0.0.1:2379,http://127.0.0.1:4001.
+``` 
+
+The restored files are located at the new folder /var/lib/etcd-backup, now we have to tell etcd to use that directory:
+
+``` bash
+➜ root@cluster3-master1:~# vim /etc/kubernetes/etcd.yaml
+# /etc/kubernetes/etcd.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    component: etcd
+    tier: control-plane
+  name: etcd
+  namespace: kube-system
+spec:
+...
+    - mountPath: /etc/kubernetes/pki/etcd
+      name: etcd-certs
+  hostNetwork: true
+  priorityClassName: system-cluster-critical
+  volumes:
+  - hostPath:
+      path: /etc/kubernetes/pki/etcd
+      type: DirectoryOrCreate
+    name: etcd-certs
+  - hostPath:
+      path: /var/lib/etcd-backup                # change
+      type: DirectoryOrCreate
+    name: etcd-data
+status: {}
+``` 
+
+Now we move all controlplane yaml again into the manifest directory. Give it some time (up to several minutes) for etcd to restart and for the api-server to be reachable again:
+
+``` bash
+root@cluster3-master1:/etc/kubernetes/manifests# mv ../*.yaml .
+
+root@cluster3-master1:/etc/kubernetes/manifests# watch crictl ps
+Then we check again for the Pod:
+
+➜ root@cluster3-master1:~# kubectl get pod -l run=test
+No resources found in default namespace.
+``` 
+</p>
+</details>
