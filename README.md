@@ -1,6 +1,10 @@
 # ☸️ Certified Kubernetes Administrator (CKA) Study Guide 2024
 
-![](assets/cka.png)
+
+<p align="center">
+  <img src="assets/cka.png" alt="CKA EXAM">
+</p>
+
 
 The [Certified Kubernetes Administrator (CKA) certification](https://www.cncf.io/certification/cka/) exam certifies that candidates have the skills, knowledge, and competency to perform the responsibilities of Kubernetes administrators.
  
@@ -22,12 +26,15 @@ Register today and use our exclusive coupon code TECK20 for the CKA exam to get 
 
 💰💰 [GET 20% OFF ON KUBERNETES CKA VOUCHER $395 --> $316](https://teckbootcamps.com/linux-foundation-coupons/#%f0%9f%94%a5-20-off-kubernetes-certification-coupon-ckad-cka-cks-running-now)<sup>Blog</sup>
 
-![](assets/voucher-cka.png)
+
+<p align="center">
+  <img src="assets/voucher-cka.png" alt="CKA EXAM Voucher">
+</p>
+
 
 [![GET VOUCHER](assets/buy-voucher.png)](https://teckbootcamps.com/linux-foundation-coupons/)
 
 📚 [GET Kubernetes 1.29 New features (Blog Post): ](https://teckbootcamps.com/an-overview-of-new-features-in-kubernetes-v1-29/) 
-![](assets/kubernetes-1-29.png)
 
 # CKA Exam Syllabus (Kubernetes 1.29) 
 - [Cluster Architecture, Installation & Configuration - 25%](a.cluster-Architecture-Installation-Configuration.md)
@@ -52,6 +59,13 @@ Practice a lot with Kubernetes:
 - [CKA Scenarios - killercoda.com](https://killercoda.com/killer-shell-cka)
 - [Learning Playground - by Docker](https://labs.play-with-k8s.com/)
 
+
+# CKA Exam Questions And Answers
+
+Practice a lot with Kubernetes:
+
+- [CKA Exam Questions And Answers](f.cka-exam-questions-and-answers.md)
+ 
 
 # kubectl Ninja
 
@@ -101,7 +115,6 @@ Kubectl Autocomplete
 ```shell
 source <(kubectl completion bash)
 ```
-
 
 # 💬 Share To Your Network
 If this repo has helped you in any way, feel free to share !
