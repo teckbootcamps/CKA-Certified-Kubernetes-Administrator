@@ -2,10 +2,10 @@
 
 ## Kubernetes new releases
 
-📚[Kubernetes Releases): ](https://kubernetes.io/releases/) <sup>Documentation </sup>
-📚 [GET Kubernetes 1.29 New features (Blog Post): ](https://teckbootcamps.com/an-overview-of-new-features-in-kubernetes-v1-29/)  <sup>Blog </sup>
-📚 [GET Kubernetes 1.28 New features (Blog Post): ](https://teckbootcamps.com/exploring-kubernetes-1-28-sidecar-container-support/) <sup>Blog </sup>
-📚 [GET Kubernetes 1.27 New features (Blog Post): ](https://teckbootcamps.com/kubernetes-1-27-what-you-need-to-know/) <sup>Blog </sup>
+* 📚[Kubernetes Releases): ](https://kubernetes.io/releases/) <sup>Documentation </sup>
+* 📚 [GET Kubernetes 1.29 New features (Blog Post): ](https://teckbootcamps.com/an-overview-of-new-features-in-kubernetes-v1-29/)  <sup>Blog </sup>
+* 📚 [GET Kubernetes 1.28 New features (Blog Post): ](https://teckbootcamps.com/exploring-kubernetes-1-28-sidecar-container-support/) <sup>Blog </sup>
+* 📚 [GET Kubernetes 1.27 New features (Blog Post): ](https://teckbootcamps.com/kubernetes-1-27-what-you-need-to-know/) <sup>Blog </sup>
 
 ## kubectl commands
 
