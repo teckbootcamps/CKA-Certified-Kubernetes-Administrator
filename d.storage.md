@@ -8,6 +8,7 @@
 
 - Understand storage classes, persistent volumes.
 
+    - [Understanding Kubernetes Volumes and Configuration Data](https://teckbootcamps.com/understanding-kubernetes-volumes-and-configuration-data/)<sup>Blog</sup>
     - [Kubernetes Documentation > Concepts > Storage > Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)<sup>Doc</sup>
     - [Kubernetes Documentation > Concepts > Storage > Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)<sup>Doc</sup>
 
@@ -16,7 +17,7 @@
     - [Kubernetes Documentation > Concepts > Storage > Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes)<sup>Doc</sup>
 
 - Understand persistent volume claims primitive.
-
+    - [Understanding Kubernetes Volumes and Configuration Data](https://teckbootcamps.com/understanding-kubernetes-volumes-and-configuration-data/)<sup>Blog</sup>
     - [Kubernetes Documentation > Concepts > Storage > Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)<sup>Doc</sup>
 
 - Know how to configure applications with persistent storage.

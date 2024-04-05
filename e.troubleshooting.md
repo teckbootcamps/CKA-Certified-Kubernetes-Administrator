@@ -13,7 +13,7 @@
     - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Troubleshoot Clusters](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster/)<sup>Doc</sup>
 
 - Understand how to monitor applications.
-
+    - [Kubernetes Monitoring and Logging By Examples](https://teckbootcamps.com/kubernetes-monitoring-and-logging-by-examples/)<sup>Blog</sup>
     - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Tools for Monitoring Resources](https://kubernetes.io/docs/tasks/debug-application-cluster/resource-usage-monitoring/)<sup>Doc</sup>
 
 - Manage container stdout & stderr logs.
@@ -22,6 +22,7 @@
 
 - Troubleshoot application failure.
 
+    - [Troubleshooting the Process of a Kubernetes Pod being killed](https://teckbootcamps.com/troubleshooting-the-process-of-a-kubernetes-pod-being-killed/)<sup>Blog</sup>
     - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Troubleshoot Applications](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application/)<sup>Doc</sup>
     - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Application Introspection and Debugging](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application-introspection/)<sup>Doc</sup>
 

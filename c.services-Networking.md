@@ -20,9 +20,14 @@
 
 - Understand ClusterIP, NodePort, LoadBalancer service types and endpoints.
 
+    - [Working with Kubernetes Services](https://teckbootcamps.com/working-with-kubernetes-services/))<sup>Blog</sup>
+
     - [Kubernetes Documentation > Concepts > Services, Load Balancing, and Networking > Service](https://kubernetes.io/docs/concepts/services-networking/service/)<sup>Doc</sup>
 
+
 - Know how to use Ingress controllers and Ingress resources.
+
+    - [Introducing  Gateway API , Ingress gateway and Service Mesh in Kubernetes](https://teckbootcamps.com/introducing-gateway-api-ingress-gateway-and-service-mesh-in-kubernetes/))<sup>Blog</sup>
 
     - [Kubernetes Documentation > Concepts > Services, Load Balancing, and Networking > Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)<sup>Doc</sup>
     - [Kubernetes Documentation > Concepts > Services, Load Balancing, and Networking > Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)<sup>Doc</sup>

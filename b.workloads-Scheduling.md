@@ -10,6 +10,8 @@
 
 - Understand deployments and how to perform rolling update and rollbacks.
 
+    - [Practical Examples for 3 Advanced Kubernetes deployment strategies](https://teckbootcamps.com/practical-examples-for-3-advanced-kubernetes-deployment-strategies/))<sup>Doc</sup>
+
     - [Kubernetes Documentation > Concepts > Workloads > Controllers > Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)<sup>Doc</sup>
 
     - Example Deployment File (dep-nginx.yaml) using NGINX
@@ -58,7 +60,9 @@
         kubectl rollout undo deployment.v1.apps/nginx-deployment
         ```
 
-- Use ConfigMaps and Secrets to configure applications.
+    - [ Use ConfigMaps and Secrets to configure applications.](https://teckbootcamps.com/understanding-kubernetes-volumes-and-configuration-data/)<sup>Blog</sup>
+
+    - [Kubernetes Secrets: A complete guide to securely managing sensitive information](https://teckbootcamps.com/kubernetes-secrets-a-complete-guide-to-securely-managing-sensitive-information/)<sup>Blog</sup>
 
     - [Kubernetes Documentation > Concepts > Configuration > ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)<sup>Doc</sup>
 
@@ -79,6 +83,8 @@
 - Understand the primitives used to create robust, self-healing, application deployments.
 
     - [Kubernetes Documentation > Concepts > Workloads > Pods > Pod Lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)<sup>Doc</sup>
+    
+    - [Kubernetes Monitoring and Logging By Examples](https://teckbootcamps.com/kubernetes-monitoring-and-logging-by-examples/)<sup>Blog</sup>
 
     - [Kubernetes Documentation > Tasks > Configure Pods and Containers > Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)<sup>Doc</sup>
 
