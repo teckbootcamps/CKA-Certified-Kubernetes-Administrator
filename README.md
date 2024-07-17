@@ -1,4 +1,4 @@
-# ☸️ Certified Kubernetes Administrator (CKA) Study Guide 2024 ( Updated April 2024) 
+# ☸️ Certified Kubernetes Administrator (CKA) Study Guide 2024 ( Updated July 2024) 
 
 
 <p align="center">
@@ -36,7 +36,7 @@ Register today and use our exclusive coupon code TECK20 for the CKA exam to get 
 
 📚 [GET Kubernetes 1.29 New features (Blog Post): ](https://teckbootcamps.com/an-overview-of-new-features-in-kubernetes-v1-29/) 
 
-# CKA Exam Syllabus (Kubernetes 1.29) 
+# CKA Exam Syllabus (Kubernetes 1.30) 
 - [Cluster Architecture, Installation & Configuration - 25%](a.cluster-Architecture-Installation-Configuration.md)
 - [Workloads & Scheduling - 15%](b.workloads-Scheduling.md)
 - [Services & Networking - 20%](c.services-Networking.md)
