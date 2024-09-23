@@ -13,28 +13,18 @@ Not sure where to start? You may consider reviewing our suggested CKA learning p
 EXAM SIMULATOR! Learners will now have access to an exam simulator, provided by Killer.sh, to experience the exam environment. You will have two exam simulation attempts (36 hours of access for each attempt from the start of activation).
 Simulation includes 20-25 questions (which are exactly the same for every attempt and every user (unlike those found on the actual exams) and graded simulation results).
 
-UPCOMING POLICY CHANGE: Please note that our Certification Period Policy is changing effective April 01, 2024, 00:00UTC. Certifications achieved on or after this date will expire 24 months from the date the program certification requirements, including passing the exam, are met. We encourage anyone interested and prepared to schedule and take your exam before the policy change. Please see additional details here.
 
 * 📚 [Mohamed BEN HASSINE: Guide to Certified Kubernetes Administrator (CKA)](https://teckbootcamps.com/cka-exam-study-guide/)<sup>Blog</sup>
 
-# Register for the CKA Certification [Save 20% Today]
-To begin your journey of becoming a Certified Kubernetes Administrator(CKA) – start by registering for the CKA exam on the Linux Foundation portal. When you register you get free access to two sessions of killer.sh CKA practice exams that will help you clear the CKA exam.
 
-Register today and use our exclusive coupon code TECK20 for the CKA exam to get a 20% discount on CKA (and KCNA, CKAD, and CKS certifications ). This code "TECK20" expires soon.
+## 💰💰 [30% OFF] Kubernetes Certification Coupon CKA 
 
-- [Kubernetes the Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way)<sup>Github</sup>
+Save 30% using Coupon code **TECK30** on all the Linux Foundation training and certification programs. This is a limited-time offer for this month. This offer is applicable for CKA, CKAD, CKS, KCNA, LFCS, PCA FINOPS, NodeJS, CHFA, and all the other certification, training, and BootCamp programs.
 
-💰💰 [GET 20% OFF ON KUBERNETES CKA VOUCHER $395 --> $316](https://teckbootcamps.com/linux-foundation-coupons/#%f0%9f%94%a5-20-off-kubernetes-certification-coupon-ckad-cka-cks-running-now)<sup>Blog</sup>
+-  Kubernetes CKA VOUCHER ($395 —> $276): [kube.promo/cka](https://teckbootcamps.com/go/cka-exam-2024/)
 
+> Announcement: The CKA exam syllabus will be updated on November 25th, 2024. Read our CKA exam update [blog] (https://teckbootcamps.com/cka-exam-update-new-features-and-removed-content-explained/) to learn more.
 
-<p align="center">
-  <img src="assets/voucher-cka.png" alt="CKA EXAM Voucher">
-</p>
-
-
-[![GET VOUCHER](assets/buy-voucher.png)](https://teckbootcamps.com/linux-foundation-coupons/)
-
-📚 [GET Kubernetes 1.29 New features (Blog Post): ](https://teckbootcamps.com/an-overview-of-new-features-in-kubernetes-v1-29/) 
 
 # CKA Exam Syllabus (Kubernetes 1.30) 
 - [Cluster Architecture, Installation & Configuration - 25%](a.cluster-Architecture-Installation-Configuration.md)
