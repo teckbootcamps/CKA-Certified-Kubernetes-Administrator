@@ -1,4 +1,4 @@
-# ☸️ Certified Kubernetes Administrator (CKA) Study Guide 2024 ( Updated July 2024) 
+# ☸️ Certified Kubernetes Administrator (CKA) Study Guide 2024 ( Updated September 2024) 
 
 
 <p align="center">
