@@ -1,4 +1,4 @@
-# ☸️ Certified Kubernetes Administrator (CKA) Study Guide 2024 ( Updated September 2024) 
+# ☸️ Certified Kubernetes Administrator (CKA) Study Guide 2024 ( Updated December 2024) 
 
 
 <p align="center">
@@ -17,13 +17,13 @@ Simulation includes 20-25 questions (which are exactly the same for every attemp
 * 📚 [Guide to Certified Kubernetes Administrator (CKA)](https://teckbootcamps.com/cka-exam-study-guide/)<sup>Blog</sup>
 
 
-## 💰💰 [30% OFF] Kubernetes Certification Coupon CKA 
+## 💰💰 [50% OFF] Kubernetes Certification Coupon CKA 
 
-Save 30% using Coupon code **TECK30** on all the Linux Foundation training and certification programs. This is a limited-time offer for this month. This offer is applicable for CKA, CKAD, CKS, KCNA, LFCS, PCA FINOPS, NodeJS, CHFA, and all the other certification, training, and BootCamp programs.
+Save 50% using Coupon code **CYBER24CC** on all the Linux Foundation training and certification programs. This is a limited-time offer for this month. This offer is applicable for CKA, CKAD, CKS, KCNA, LFCS, PCA FINOPS, NodeJS, CHFA, and all the other certification, training, and BootCamp programs.
 
--  Kubernetes CKA VOUCHER ($395 —> $276): [kube.promo/cka](https://teckbootcamps.com/go/cka-exam-2024/)
+-  Kubernetes CKA VOUCHER ($395 —> $197): [kube.promo/cka](https://teckbootcamps.com/go/cka-exam-2024/)
 
-> Announcement: The CKA exam syllabus will be updated on November 25th, 2024. Read our CKA exam update [blog] (https://teckbootcamps.com/cka-exam-update-new-features-and-removed-content-explained/) to learn more.
+> Announcement: The CKA exam syllabus will be updated on January 25th, 2025. Read our CKA exam update [blog] (https://teckbootcamps.com/cka-exam-update-new-features-and-removed-content-explained/) to learn more.
 
 
 # CKA Exam Syllabus (Kubernetes 1.30) 
