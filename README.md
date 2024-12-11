@@ -46,13 +46,6 @@ Save 30% using Coupon code **TECK30** on all the Linux Foundation training and c
 
 # 1. Cluster Architecture, Installation & Configuration (25%)
 
-- [x] Manage role based access control (RBAC)
-- [x] Use Kubeadm to install a basic cluster
-- [x] Manage a highly-available Kubernetes cluster
-- [x] Provision underlying infrastructure to deploy a Kubernetes cluster
-- [x] Perform a version upgrade on a Kubernetes cluster using Kubeadm
-- [x] Implement etcd backup and restore
-
 This section focuses on the core concepts of Kubernetes cluster architecture, installation, and configuration, which make up 25% of the CKA Exam. Below is a simplified breakdown of the topics covered:
 
 ### Manage Role-Based Access Control (RBAC)
@@ -81,103 +74,178 @@ Etcd is the key-value store used by Kubernetes to store cluster data. Regular ba
 
 # 2. Workloads & Scheduling (15%)
 
-- [x]  Understand deployments and how to perform rolling update and rollbacks
-- [x]  Use ConfigMaps and Secrets to configure applications
-- [x]  Know how to scale applications
-- [x]  Understand the primitives used to create robust, self-healing, application deployments
-- [x]  Understand how resource limits can affect Pod scheduling
-- [x]  Awareness of manifest management and common templating tools
+This section focuses on managing workloads and scheduling in Kubernetes, making up 15% of the CKA Exam. Below are the key topics explained with `kubectl` examples:
 
+### Understand Deployments and How to Perform Rolling Updates and Rollbacks
+Deployments manage the lifecycle of applications. Rolling updates allow you to update applications without downtime, while rollbacks revert to a previous version if needed.
 
-- Understand deployments and how to perform rolling update and rollbacks.
+#### Example:
+**Create a deployment:**
+```bash
+kubectl create deployment nginx --image=nginx:1.21
+```
 
-    - [Practical Examples for 3 Advanced Kubernetes deployment strategies](https://teckbootcamps.com/practical-examples-for-3-advanced-kubernetes-deployment-strategies/))<sup>Doc</sup>
+**Perform a rolling update:**
+```bash
+kubectl set image deployment/nginx nginx=nginx:1.22
+```
 
-    - [Kubernetes Documentation > Concepts > Workloads > Controllers > Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)<sup>Doc</sup>
+**Rollback to a previous version:**
+```bash
+kubectl rollout undo deployment/nginx
+```
 
-    - Example Deployment File (dep-nginx.yaml) using NGINX
+- [Learn more about deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
-        ```yaml
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-            name: nginx-deployment
-            labels:
-                app: nginx
-        spec:
-          replicas: 3
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - name: nginx
-                image: nginx:1.21.6
-                ports:
-                - containerPort: 80
-        ```
+### Use ConfigMaps and Secrets to Configure Applications
+ConfigMaps and Secrets store configuration data and sensitive information, allowing you to decouple configuration from application code.
 
-        ```bash
-        # Create Deployment
-        kubectl create -f dep-nginx.yaml
+#### Example:
+**Create a ConfigMap:**
+```bash
+kubectl create configmap app-config --from-literal=key1=value1
+```
 
-        # Get Deployments
-        kubectl get deployments
+**Create a Secret:**
+```bash
+kubectl create secret generic app-secret --from-literal=password=mysecret
+```
 
-        # Update Deployment
-        kubectl edit deployment.v1.apps/nginx-deployment
+**Use them in a Pod:**
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod
+spec:
+  containers:
+  - name: app-container
+    image: myapp:latest
+    env:
+    - name: CONFIG_KEY
+      valueFrom:
+        configMapKeyRef:
+          name: app-config
+          key: key1
+    - name: PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: app-secret
+          key: password
+```
+```bash
+kubectl apply -f pod.yaml
+```
 
-        # See rollout status
-        kubectl rollout status deployment.v1.apps/nginx-deployment
+- [Learn more about ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
+- [Learn more about Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
 
-        # Describe Deployment
-        kubectl describe deployment
+### Know How to Scale Applications
+Scaling ensures your application can handle varying levels of traffic by adjusting the number of replicas.
 
-        # Rolling back to a previous revision
-        kubectl rollout undo deployment.v1.apps/nginx-deployment
-        ```
+#### Example:
+**Scale a deployment:**
+```bash
+kubectl scale deployment nginx --replicas=5
+```
 
-    - [ Use ConfigMaps and Secrets to configure applications.](https://teckbootcamps.com/understanding-kubernetes-volumes-and-configuration-data/)<sup>Blog</sup>
+**Autoscale based on CPU usage:**
+```bash
+kubectl autoscale deployment nginx --min=2 --max=10 --cpu-percent=50
+```
 
-    - [Kubernetes Secrets: A complete guide to securely managing sensitive information](https://teckbootcamps.com/kubernetes-secrets-a-complete-guide-to-securely-managing-sensitive-information/)<sup>Blog</sup>
+- [Learn more about scaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
 
-    - [Kubernetes Documentation > Concepts > Configuration > ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)<sup>Doc</sup>
+### Understand the Primitives Used to Create Robust, Self-Healing, Application Deployments
+Kubernetes primitives like Deployments, ReplicaSets, and Probes ensure applications are highly available and self-healing.
 
-    - [Kubernetes Documentation > Concepts > Configuration > Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)<sup>Doc</sup>
+#### Example:
+**Add readiness and liveness probes:**
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: myapp:latest
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+```
+```bash
+kubectl apply -f deployment.yaml
+```
 
-- Know how to scale applications.
+- [Learn more about probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 
-    - [Kubernetes Documentation > Concepts > Cluster Administration > Managing Resources > Scaling Your Application](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/#scaling-your-application)<sup>Doc</sup>.
+### Understand How Resource Limits Can Affect Pod Scheduling
+Resource requests and limits ensure fair allocation of cluster resources and influence pod scheduling.
 
-        ```bash
-        # Increase replicas number for nginx-deployment
-        kubectl scale deployment/nginx-deployment --replicas=5
+#### Example:
+**Set resource requests and limits:**
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resource-demo
+spec:
+  containers:
+  - name: demo-container
+    image: nginx
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+```
+```bash
+kubectl apply -f resource-demo.yaml
+```
 
-        # Using autoscaling
-        kubectl autoscale deployment/nginx-deployment --min=2 --max=5
-        ```
+- [Learn more about resource management](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
 
-- Understand the primitives used to create robust, self-healing, application deployments.
+### Awareness of Manifest Management and Common Templating Tools
+Manifest management tools like Helm and Kustomize simplify deploying and managing Kubernetes applications.
 
-    - [Kubernetes Documentation > Concepts > Workloads > Pods > Pod Lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)<sup>Doc</sup>
-    
-    - [Kubernetes Monitoring and Logging By Examples](https://teckbootcamps.com/kubernetes-monitoring-and-logging-by-examples/)<sup>Blog</sup>
+#### Example:
+**Using Kustomize:**
+```bash
+kubectl apply -k ./my-kustomization/
+```
 
-    - [Kubernetes Documentation > Tasks > Configure Pods and Containers > Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)<sup>Doc</sup>
+**Using Helm:**
+```bash
+helm install my-app ./my-chart
+```
 
-- Understand how resource limits can affect Pod scheduling.
+- [Learn more about Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
+- [Learn more about Helm](https://helm.sh/docs/)
 
-    - [Kubernetes Documentation > Concepts > Configuration > Managing Resources for Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)<sup>Doc</sup>
+---
 
-- Awareness of manifest management and common templating tools.
+### Resources to Prepare
+- [Kubernetes Documentation](https://kubernetes.io/docs/)
+- [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+- [Kubernetes Workloads](https://kubernetes.io/docs/concepts/workloads/)
 
-    - [Kubernetes Documentation > Concepts > Cluster Administration > Managing Resources](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/)<sup>Doc</sup>
-
-    - [Kubernetes Documentation > Tasks > Manage Kubernetes Objects](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/)<sup>Doc</sup>
 
 
 # 3. Services & Networking (20%)
