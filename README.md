@@ -1,4 +1,4 @@
-# ☸️ Certified Kubernetes Administrator (CKA) Study Guide for December 2024
+# ☸️ Certified Kubernetes Administrator (CKA) Exam Guide - V1.31 (2024)
 
 
 <p align="center">
