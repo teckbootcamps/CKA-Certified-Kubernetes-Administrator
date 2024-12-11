@@ -38,13 +38,13 @@ Save 30% using Coupon code **TECK30** on all the Linux Foundation training and c
 | **Topic**                                 | **Concepts**                                                                                                                                                       | **Weightage** |
 |-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
 | [**1. Cluster Architecture, Installation & Configuration - 25%**](#cluster-architecture-installation--configuration-20) | 1. Manage role-based access control (RBAC)<br>2. Use Kubeadm to install a basic cluster<br>3. Manage a highly-available Kubernetes cluster<br>4. Provision underlying infrastructure to deploy a Kubernetes cluster<br>5. Perform a version upgrade on a Kubernetes cluster using Kubeadm<br>6. Implement etcd backup and restore | 25%          |
-| [**2. Workloads & Scheduling - 15%**](b.workloads-Scheduling.md) | 1. Understand deployments and how to perform rolling updates and rollbacks<br>2. Use ConfigMaps and Secrets to configure applications<br>3. Know how to scale applications<br>4. Understand the primitives used to create robust, self-healing application deployments<br>5. Understand how resource limits can affect Pod scheduling<br>6. Awareness of manifest management and common templating tools | 15%          |
-| [**3. Services & Networking - 20%**](c.services-Networking.md)                | 1. Understand host networking configuration on the cluster nodes<br>2. Understand connectivity between Pods<br>3. Understand ClusterIP, NodePort, LoadBalancer service types and endpoints<br>4. Know how to use Ingress controllers and Ingress resources<br>5. Know how to configure and use CoreDNS<br>6. Choose an appropriate container network interface plugin | 20%          |
-| [**4. Storage - 10%**](d.storage.md)               | 1. Understand storage classes and persistent volumes<br>2. Understand volume modes, access modes, and reclaim policies for volumes<br>3. Understand persistent volume claims primitive<br>4. Know how to configure applications with persistent storage | 10%          |
-| [**5. Troubleshooting - 30%**](e.troubleshooting.md) | 1. Evaluate cluster and node logging<br>2. Understand how to monitor applications<br>3. Manage container stdout & stderr logs<br>4. Troubleshoot application failure<br>5. Troubleshoot cluster component failure<br>6. Troubleshoot networking | 30%          |
+| [**2. Workloads & Scheduling - 15%**](#2-workloads--scheduling-15) | 1. Understand deployments and how to perform rolling updates and rollbacks<br>2. Use ConfigMaps and Secrets to configure applications<br>3. Know how to scale applications<br>4. Understand the primitives used to create robust, self-healing application deployments<br>5. Understand how resource limits can affect Pod scheduling<br>6. Awareness of manifest management and common templating tools | 15%          |
+| [**3. Services & Networking - 20%**](#3-services--networking-20)                | 1. Understand host networking configuration on the cluster nodes<br>2. Understand connectivity between Pods<br>3. Understand ClusterIP, NodePort, LoadBalancer service types and endpoints<br>4. Know how to use Ingress controllers and Ingress resources<br>5. Know how to configure and use CoreDNS<br>6. Choose an appropriate container network interface plugin | 20%          |
+| [**4. Storage - 10%**](#4-storage-10-)               | 1. Understand storage classes and persistent volumes<br>2. Understand volume modes, access modes, and reclaim policies for volumes<br>3. Understand persistent volume claims primitive<br>4. Know how to configure applications with persistent storage | 10%          |
+| [**5. Troubleshooting - 30%**](#5-troubleshooting-30-) | 1. Evaluate cluster and node logging<br>2. Understand how to monitor applications<br>3. Manage container stdout & stderr logs<br>4. Troubleshoot application failure<br>5. Troubleshoot cluster component failure<br>6. Troubleshoot networking | 30%          |
 
 
-# Cluster Architecture, Installation & Configuration (20%)
+# 1. Cluster Architecture, Installation & Configuration (20%)
 
 - [x] Manage role based access control (RBAC)
 - [x] Use Kubeadm to install a basic cluster
@@ -75,9 +75,212 @@ A "Context" is a combination of a cluster, user, and namespace. It is a way to s
     - [Kubernetes Documentation > Getting started > Production environment > Installing Kubernetes with deployment tools > Bootstrapping clusters with kubeadm > Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)<sup>Doc</sup>
 
 
+# 2. Workloads & Scheduling (15%)
+
+- [x]  Understand deployments and how to perform rolling update and rollbacks
+- [x]  Use ConfigMaps and Secrets to configure applications
+- [x]  Know how to scale applications
+- [x]  Understand the primitives used to create robust, self-healing, application deployments
+- [x]  Understand how resource limits can affect Pod scheduling
+- [x]  Awareness of manifest management and common templating tools
 
 
+- Understand deployments and how to perform rolling update and rollbacks.
 
+    - [Practical Examples for 3 Advanced Kubernetes deployment strategies](https://teckbootcamps.com/practical-examples-for-3-advanced-kubernetes-deployment-strategies/))<sup>Doc</sup>
+
+    - [Kubernetes Documentation > Concepts > Workloads > Controllers > Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)<sup>Doc</sup>
+
+    - Example Deployment File (dep-nginx.yaml) using NGINX
+
+        ```yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+            name: nginx-deployment
+            labels:
+                app: nginx
+        spec:
+          replicas: 3
+          selector:
+            matchLabels:
+              app: nginx
+          template:
+            metadata:
+              labels:
+                app: nginx
+            spec:
+              containers:
+              - name: nginx
+                image: nginx:1.21.6
+                ports:
+                - containerPort: 80
+        ```
+
+        ```bash
+        # Create Deployment
+        kubectl create -f dep-nginx.yaml
+
+        # Get Deployments
+        kubectl get deployments
+
+        # Update Deployment
+        kubectl edit deployment.v1.apps/nginx-deployment
+
+        # See rollout status
+        kubectl rollout status deployment.v1.apps/nginx-deployment
+
+        # Describe Deployment
+        kubectl describe deployment
+
+        # Rolling back to a previous revision
+        kubectl rollout undo deployment.v1.apps/nginx-deployment
+        ```
+
+    - [ Use ConfigMaps and Secrets to configure applications.](https://teckbootcamps.com/understanding-kubernetes-volumes-and-configuration-data/)<sup>Blog</sup>
+
+    - [Kubernetes Secrets: A complete guide to securely managing sensitive information](https://teckbootcamps.com/kubernetes-secrets-a-complete-guide-to-securely-managing-sensitive-information/)<sup>Blog</sup>
+
+    - [Kubernetes Documentation > Concepts > Configuration > ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)<sup>Doc</sup>
+
+    - [Kubernetes Documentation > Concepts > Configuration > Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)<sup>Doc</sup>
+
+- Know how to scale applications.
+
+    - [Kubernetes Documentation > Concepts > Cluster Administration > Managing Resources > Scaling Your Application](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/#scaling-your-application)<sup>Doc</sup>.
+
+        ```bash
+        # Increase replicas number for nginx-deployment
+        kubectl scale deployment/nginx-deployment --replicas=5
+
+        # Using autoscaling
+        kubectl autoscale deployment/nginx-deployment --min=2 --max=5
+        ```
+
+- Understand the primitives used to create robust, self-healing, application deployments.
+
+    - [Kubernetes Documentation > Concepts > Workloads > Pods > Pod Lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/)<sup>Doc</sup>
+    
+    - [Kubernetes Monitoring and Logging By Examples](https://teckbootcamps.com/kubernetes-monitoring-and-logging-by-examples/)<sup>Blog</sup>
+
+    - [Kubernetes Documentation > Tasks > Configure Pods and Containers > Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)<sup>Doc</sup>
+
+- Understand how resource limits can affect Pod scheduling.
+
+    - [Kubernetes Documentation > Concepts > Configuration > Managing Resources for Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)<sup>Doc</sup>
+
+- Awareness of manifest management and common templating tools.
+
+    - [Kubernetes Documentation > Concepts > Cluster Administration > Managing Resources](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/)<sup>Doc</sup>
+
+    - [Kubernetes Documentation > Tasks > Manage Kubernetes Objects](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/)<sup>Doc</sup>
+
+
+# 3. Services & Networking (20%)
+
+- [x] Understand host networking configuration on the cluster nodes
+- [x] Understand connectivity between Pods
+- [x] Understand ClusterIP, NodePort, LoadBalancer service types and endpoints
+- [x] Know how to use Ingress controllers and Ingress resources
+- [x] Know how to configure and use CoreDNS
+- [x] Choose an appropriate container network interface plugin
+
+
+- Understand host networking configuration on the cluster nodes.
+
+    - [Kubernetes Documentation > Concepts > Cluster Administration > Cluster Networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)<sup>Doc</sup>
+
+- Understand connectivity between Pods.
+
+    - [Kubernetes Documentation > Concepts > Workloads > Pods > Networking](https://kubernetes.io/docs/concepts/workloads/pods/#pod-networking)<sup>Doc</sup>
+
+    - [GitHub > Kubernetes Community Documentation > Design Proposals > Networking](https://raw.githubusercontent.com/kubernetes/design-proposals-archive/main/network/networking.md)<sup>Doc</sup>
+
+- Understand ClusterIP, NodePort, LoadBalancer service types and endpoints.
+
+    - [Working with Kubernetes Services](https://teckbootcamps.com/working-with-kubernetes-services/))<sup>Blog</sup>
+
+    - [Kubernetes Documentation > Concepts > Services, Load Balancing, and Networking > Service](https://kubernetes.io/docs/concepts/services-networking/service/)<sup>Doc</sup>
+
+
+- Know how to use Ingress controllers and Ingress resources.
+
+    - [Introducing  Gateway API , Ingress gateway and Service Mesh in Kubernetes](https://teckbootcamps.com/introducing-gateway-api-ingress-gateway-and-service-mesh-in-kubernetes/))<sup>Blog</sup>
+
+    - [Kubernetes Documentation > Concepts > Services, Load Balancing, and Networking > Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)<sup>Doc</sup>
+    - [Kubernetes Documentation > Concepts > Services, Load Balancing, and Networking > Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)<sup>Doc</sup>
+
+- Know how to configure and use CoreDNS.
+
+    - [Kubernetes Documentation > Tasks > Administer a Cluster > Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)<sup>Doc</sup>
+
+- Choose an appropriate container network interface plugin.
+
+    - [Kubernetes Documentation > Concepts > Extending Kubernetes > Compute, Storage, and Networking Extensions > Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)<sup>Doc</sup>
+
+
+# 4. Storage (10 %)
+
+- [x] Understand storage classes, persistent volumes
+- [x] Understand volume mode, access modes and reclaim policies for volumes
+- [x] Understand persistent volume claims primitive
+- [x] Know how to configure applications with persistent storage
+
+
+- Understand storage classes, persistent volumes.
+
+    - [Understanding Kubernetes Volumes and Configuration Data](https://teckbootcamps.com/understanding-kubernetes-volumes-and-configuration-data/)<sup>Blog</sup>
+    - [Kubernetes Documentation > Concepts > Storage > Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)<sup>Doc</sup>
+    - [Kubernetes Documentation > Concepts > Storage > Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)<sup>Doc</sup>
+
+- Understand volume mode, access modes and reclaim policies for volumes.
+
+    - [Kubernetes Documentation > Concepts > Storage > Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes)<sup>Doc</sup>
+
+- Understand persistent volume claims primitive.
+    - [Understanding Kubernetes Volumes and Configuration Data](https://teckbootcamps.com/understanding-kubernetes-volumes-and-configuration-data/)<sup>Blog</sup>
+    - [Kubernetes Documentation > Concepts > Storage > Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)<sup>Doc</sup>
+
+- Know how to configure applications with persistent storage.
+
+    - [Kubernetes Documentation > Tasks > Configure Pods and Containers > Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume)<sup>Doc</sup>
+
+
+# 5. Troubleshooting (30 %)
+
+- [x] Evaluate cluster and node logging
+- [x] Understand how to monitor applications
+- [x] Manage container stdout & stderr logs
+- [x] Troubleshoot application failure
+- [x] Troubleshoot cluster component failure
+- [x] Troubleshoot networking
+
+
+- Evaluate cluster and node logging.
+
+    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Troubleshoot Clusters](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster/)<sup>Doc</sup>
+
+- Understand how to monitor applications.
+    - [Kubernetes Monitoring and Logging By Examples](https://teckbootcamps.com/kubernetes-monitoring-and-logging-by-examples/)<sup>Blog</sup>
+    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Tools for Monitoring Resources](https://kubernetes.io/docs/tasks/debug-application-cluster/resource-usage-monitoring/)<sup>Doc</sup>
+
+- Manage container stdout & stderr logs.
+
+    - [Kubernetes Documentation > Concepts > Cluster Administration > Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)<sup>Doc</sup>
+
+- Troubleshoot application failure.
+
+    - [Troubleshooting the Process of a Kubernetes Pod being killed](https://teckbootcamps.com/troubleshooting-the-process-of-a-kubernetes-pod-being-killed/)<sup>Blog</sup>
+    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Troubleshoot Applications](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application/)<sup>Doc</sup>
+    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Application Introspection and Debugging](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application-introspection/)<sup>Doc</sup>
+
+- Troubleshoot cluster component failure.
+
+    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Troubleshoot Clusters](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster/)<sup>Doc</sup>
+
+- Troubleshoot networking.
+
+    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Debug Services](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/)<sup>Doc</sup>
 
 # CKA Exam Questions And Answers
 
