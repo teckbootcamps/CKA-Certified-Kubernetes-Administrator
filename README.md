@@ -55,26 +55,26 @@ Save 30% using Coupon code **TECK30** on all the Linux Foundation training and c
 
 This section focuses on the core concepts of Kubernetes cluster architecture, installation, and configuration, which make up 25% of the CKA Exam. Below is a simplified breakdown of the topics covered:
 
-### 1. Manage Role-Based Access Control (RBAC)
+### Manage Role-Based Access Control (RBAC)
 RBAC allows you to control access to your Kubernetes cluster. You can define roles and assign them to users or applications to limit what they can do within the cluster.- [Learn more about RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 
-### 2. Use Kubeadm to Install a Basic Cluster
+### Use Kubeadm to Install a Basic Cluster
 Kubeadm is a tool that helps you set up a Kubernetes cluster quickly and easily. It handles the necessary configurations to initialize a cluster and add worker nodes.
 - [Learn more about Kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/)
 
-### 3. Manage a Highly-Available Kubernetes Cluster
+### Manage a Highly-Available Kubernetes Cluster
 High availability ensures your Kubernetes cluster remains operational even if some components fail. This involves setting up multiple control plane nodes and using a load balancer.
 - [Learn more about high availability](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/)
 
-### 4. Provision Underlying Infrastructure to Deploy a Kubernetes Cluster
+### Provision Underlying Infrastructure to Deploy a Kubernetes Cluster
 Before deploying a cluster, you need to set up the underlying infrastructure, such as servers, networking, and storage, either on-premises or in the cloud.
 - [Learn more about cluster infrastructure](https://kubernetes.io/docs/setup/)
 
-### 5. Perform a Version Upgrade on a Kubernetes Cluster Using Kubeadm
+### Perform a Version Upgrade on a Kubernetes Cluster Using Kubeadm
 Keeping your Kubernetes cluster updated is important for security and new features. Kubeadm provides a streamlined process for upgrading cluster versions.
 - [Learn more about upgrading](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
 
-### 6. Implement Etcd Backup and Restore
+### Implement Etcd Backup and Restore
 Etcd is the key-value store used by Kubernetes to store cluster data. Regular backups ensure you can recover your cluster in case of a failure.
 - [Learn more about etcd backup and restore](https://etcd.io/docs/latest/op-guide/backup/)
 
