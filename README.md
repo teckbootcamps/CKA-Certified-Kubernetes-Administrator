@@ -33,7 +33,7 @@ Save 30% using Coupon code **TECK30** on all the Linux Foundation training and c
 > Announcement: The CKA exam syllabus will be updated on January 15th, 2025. Read our CKA exam update [blog] (https://teckbootcamps.com/cka-exam-update-new-features-and-removed-content-explained/) to learn more.
 
 
-## CKA Exam Syllabus (Updated Kubernetes 1.31  2024 )
+## CKA Exam Syllabus (Updated Kubernetes 1.31  )
 
 | **Topic**                                 | **Concepts**                                                                                                                                                       | **Weightage** |
 |-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
