@@ -21,10 +21,10 @@ If you are using this repo for guidance, please hit the star. Thanks A lot !
 | **Pass Percentage**                       | 66%                                                                                                |
 | **CKA Exam Kubernetes Version**          | Kubernetes v1.31                                                                                 |
 | **CKA Validity**                         | 2 Years  |
-| **Exam Cost**                            | $395 USD (GET 30% OFF using Coupon **TECK30**) 💥INCREASE PRICE:  $434 in January 2025         |
+| **Exam Cost**                            | $395 USD ([GET 30% OFF CKA Exam Coupon](#30-off-cka-exam-coupon)) 💥INCREASE PRICE:  $434 in January 2025         |
 
 
-## 💰💰 [30% OFF]  CKA Exam Coupon
+## [30% OFF]  CKA Exam Coupon
 
 Save 30% using Coupon code **TECK30** on all the Linux Foundation training and certification programs. This is a limited-time offer for this month. This offer is applicable for CKA, CKAD, CKS, KCNA, LFCS, PCA FINOPS, NodeJS, CHFA, and all the other certification, training, and BootCamp programs.
 
