@@ -37,14 +37,14 @@ Save 30% using Coupon code **TECK30** on all the Linux Foundation training and c
 
 | **Topic**                                 | **Concepts**                                                                                                                                                       | **Weightage** |
 |-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
-| [**1. Cluster Architecture, Installation & Configuration - 25%**](#1-cluster-architecture-installation--configuration-20) | 1. Manage role-based access control (RBAC)<br>2. Use Kubeadm to install a basic cluster<br>3. Manage a highly-available Kubernetes cluster<br>4. Provision underlying infrastructure to deploy a Kubernetes cluster<br>5. Perform a version upgrade on a Kubernetes cluster using Kubeadm<br>6. Implement etcd backup and restore | 25%          |
+| [**1. Cluster Architecture, Installation & Configuration - 25%**](#1-cluster-architecture-installation--configuration-25) | 1. Manage role-based access control (RBAC)<br>2. Use Kubeadm to install a basic cluster<br>3. Manage a highly-available Kubernetes cluster<br>4. Provision underlying infrastructure to deploy a Kubernetes cluster<br>5. Perform a version upgrade on a Kubernetes cluster using Kubeadm<br>6. Implement etcd backup and restore | 25%          |
 | [**2. Workloads & Scheduling - 15%**](#2-workloads--scheduling-15) | 1. Understand deployments and how to perform rolling updates and rollbacks<br>2. Use ConfigMaps and Secrets to configure applications<br>3. Know how to scale applications<br>4. Understand the primitives used to create robust, self-healing application deployments<br>5. Understand how resource limits can affect Pod scheduling<br>6. Awareness of manifest management and common templating tools | 15%          |
 | [**3. Services & Networking - 20%**](#3-services--networking-20)                | 1. Understand host networking configuration on the cluster nodes<br>2. Understand connectivity between Pods<br>3. Understand ClusterIP, NodePort, LoadBalancer service types and endpoints<br>4. Know how to use Ingress controllers and Ingress resources<br>5. Know how to configure and use CoreDNS<br>6. Choose an appropriate container network interface plugin | 20%          |
 | [**4. Storage - 10%**](#4-storage-10-)               | 1. Understand storage classes and persistent volumes<br>2. Understand volume modes, access modes, and reclaim policies for volumes<br>3. Understand persistent volume claims primitive<br>4. Know how to configure applications with persistent storage | 10%          |
 | [**5. Troubleshooting - 30%**](#5-troubleshooting-30-) | 1. Evaluate cluster and node logging<br>2. Understand how to monitor applications<br>3. Manage container stdout & stderr logs<br>4. Troubleshoot application failure<br>5. Troubleshoot cluster component failure<br>6. Troubleshoot networking | 30%          |
 
 
-# 1. Cluster Architecture, Installation & Configuration (20%)
+# 1. Cluster Architecture, Installation & Configuration (25%)
 
 - [x] Manage role based access control (RBAC)
 - [x] Use Kubeadm to install a basic cluster
@@ -53,26 +53,30 @@ Save 30% using Coupon code **TECK30** on all the Linux Foundation training and c
 - [x] Perform a version upgrade on a Kubernetes cluster using Kubeadm
 - [x] Implement etcd backup and restore
 
-## Set the context and the namespace.
-A "Context" is a combination of a cluster, user, and namespace. It is a way to specify the cluster you want to interact with, the user or authentication credentials you want to use, and the default namespace for that user. Setting a context is important because it helps you manage multiple Kubernetes clusters and switch between them easily.
+This section focuses on the core concepts of Kubernetes cluster architecture, installation, and configuration, which make up 25% of the CKA Exam. Below is a simplified breakdown of the topics covered:
 
-**Use Cases:**  Multi-cluster Management, User and Authentication, isolate and organize resources, simplifies command-line operations.
+### 1. Manage Role-Based Access Control (RBAC)
+RBAC allows you to control access to your Kubernetes cluster. You can define roles and assign them to users or applications to limit what they can do within the cluster.- [Learn more about RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 
-**Hint:** Don't change the namespace, change the context as per the question. If there is a namespace add -n `namespace` to lessen the risk of error. Set context before each question using the kubectl config command, and switch between contexts using kubectl config use-context. 
+### 2. Use Kubeadm to Install a Basic Cluster
+Kubeadm is a tool that helps you set up a Kubernetes cluster quickly and easily. It handles the necessary configurations to initialize a cluster and add worker nodes.
+- [Learn more about Kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/)
 
+### 3. Manage a Highly-Available Kubernetes Cluster
+High availability ensures your Kubernetes cluster remains operational even if some components fail. This involves setting up multiple control plane nodes and using a load balancer.
+- [Learn more about high availability](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/)
 
-- Manage role based access control (RBAC).
+### 4. Provision Underlying Infrastructure to Deploy a Kubernetes Cluster
+Before deploying a cluster, you need to set up the underlying infrastructure, such as servers, networking, and storage, either on-premises or in the cloud.
+- [Learn more about cluster infrastructure](https://kubernetes.io/docs/setup/)
 
-    - [Understanding Kubernetes RBAC](https://teckbootcamps.com/understanding-kubernetes-rbac/)<sup>Blog</sup>
+### 5. Perform a Version Upgrade on a Kubernetes Cluster Using Kubeadm
+Keeping your Kubernetes cluster updated is important for security and new features. Kubeadm provides a streamlined process for upgrading cluster versions.
+- [Learn more about upgrading](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
 
-    - [Kubernetes Documentation > Reference > Accessing the API > Using RBAC Authorization](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)<sup>Doc</sup>
-
-
-- Use Kubeadm to install a basic cluster.
-
-    - [How To Setup Kubernetes Cluster Using Kubeadm](https://teckbootcamps.com/how-to-setup-kubernetes-cluster-using-kubeadm/)<sup><blog</sup>
-
-    - [Kubernetes Documentation > Getting started > Production environment > Installing Kubernetes with deployment tools > Bootstrapping clusters with kubeadm > Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)<sup>Doc</sup>
+### 6. Implement Etcd Backup and Restore
+Etcd is the key-value store used by Kubernetes to store cluster data. Regular backups ensure you can recover your cluster in case of a failure.
+- [Learn more about etcd backup and restore](https://etcd.io/docs/latest/op-guide/backup/)
 
 
 # 2. Workloads & Scheduling (15%)
