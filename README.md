@@ -19,7 +19,7 @@ If you are using this repo for guidance, please hit the star. Thanks A lot !
 | **Exam Type**                             | Performance Based NOT MCQ )                                    |
 | **Exam Duration**                         | 2 hours                                                                                            |
 | **Pass Percentage**                       | 66%                                                                                                |
-| **CKA Exam Kubernetes Version**          | Kubernetes v1.31                                                                                 |
+| **CKA Exam Kubernetes Version**          | [Kubernetes v1.31](##cka-exam-syllabus-updated-kubernetes-131-2024)                                                                               |
 | **CKA Validity**                         | 2 Years  |
 | **Exam Cost**                            | $395 USD ([GET 30% OFF CKA Exam Coupon](#30-off-cka-exam-coupon)) 💥INCREASE PRICE:  $434 in January 2025         |
 
