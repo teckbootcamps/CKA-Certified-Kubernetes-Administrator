@@ -28,7 +28,7 @@ If you are using this repo for guidance, please hit the star. Thanks A lot !
 
 Save 30% using Coupon code **TECK30** on all the Linux Foundation training and certification programs. This is a limited-time offer for this month. This offer is applicable for CKA, CKAD, CKS, KCNA, LFCS, PCA FINOPS, NodeJS, CHFA, and all the other certification, training, and BootCamp programs.
 
--  Kubernetes CKA VOUCHER ($395 —> $276): [teckbootcamps/cka](https://teckbootcamps.com/go/cka-exam-2024/)
+-  Kubernetes CKA VOUCHER ($395 —> $276): [teckbootcamps-30%off/cka](https://teckbootcamps.com/go/cka-exam-2024/)
 
 > Announcement: The CKA exam syllabus will be updated on January 15th, 2025. Read our CKA exam update [SEE BLOG POST](https://teckbootcamps.com/cka-exam-update-new-features-and-removed-content-explained/) to learn more.
 
