@@ -7,8 +7,7 @@
 > This guide is part of our blog [Pass the CKA Certification Exam: The Complete Study Guide ](https://teckbootcamps.com/cka-exam-study-guide/).
 
 ## Hit the Star! :star:
-
-If you are using this repo for guidance, please hit the star. Thanks A lot !
+> If you are using this repo for guidance, please hit the star. Thanks A lot !
 
 >  The [Certified Kubernetes Administrator (CKA) certification](https://www.cncf.io/certification/cka/) exam certifies that candidates have the skills, knowledge, and competency to perform the responsibilities of Kubernetes administrators.
  
@@ -28,7 +27,7 @@ If you are using this repo for guidance, please hit the star. Thanks A lot !
 
 Save 30% using Coupon code **TECK30** on all the Linux Foundation training and certification programs. This is a limited-time offer for this month. This offer is applicable for CKA, CKAD, CKS, KCNA, LFCS, PCA FINOPS, NodeJS, CHFA, and all the other certification, training, and BootCamp programs.
 
--  Kubernetes CKA VOUCHER ($395 —> $276): [teckbootcamps-30%off/cka](https://teckbootcamps.com/go/cka-exam-2024/)
+> Kubernetes CKA VOUCHER ($395 —> $276): [teckbootcamps-30%off/cka](https://teckbootcamps.com/go/cka-exam-2024/)
 
 > Announcement: The CKA exam syllabus will be updated on January 15th, 2025. Read our CKA exam update [SEE BLOG POST](https://teckbootcamps.com/cka-exam-update-new-features-and-removed-content-explained/) to learn more.
 
@@ -49,27 +48,32 @@ Save 30% using Coupon code **TECK30** on all the Linux Foundation training and c
 This section focuses on the core concepts of Kubernetes cluster architecture, installation, and configuration, which make up 25% of the CKA Exam. Below is a simplified breakdown of the topics covered:
 
 ### Manage Role-Based Access Control (RBAC)
-RBAC allows you to control access to your Kubernetes cluster. You can define roles and assign them to users or applications to limit what they can do within the cluster.- [Learn more about RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+> RBAC allows you to control access to your Kubernetes cluster. You can define roles and assign them to users or applications to limit what they can do within the cluster.- [Learn more about RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 
 ### Use Kubeadm to Install a Basic Cluster
-Kubeadm is a tool that helps you set up a Kubernetes cluster quickly and easily. It handles the necessary configurations to initialize a cluster and add worker nodes.
-- [Learn more about Kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/)
+> Kubeadm is a tool that helps you set up a Kubernetes cluster quickly and easily. It handles the necessary configurations to initialize a cluster and add worker nodes.
+
+> - [Learn more about Kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/)
 
 ### Manage a Highly-Available Kubernetes Cluster
-High availability ensures your Kubernetes cluster remains operational even if some components fail. This involves setting up multiple control plane nodes and using a load balancer.
-- [Learn more about high availability](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/)
+> High availability ensures your Kubernetes cluster remains operational even if some components fail. This involves setting up multiple control plane nodes and using a load balancer.
+
+> - [Learn more about high availability](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/)
 
 ### Provision Underlying Infrastructure to Deploy a Kubernetes Cluster
-Before deploying a cluster, you need to set up the underlying infrastructure, such as servers, networking, and storage, either on-premises or in the cloud.
-- [Learn more about cluster infrastructure](https://kubernetes.io/docs/setup/)
+> Before deploying a cluster, you need to set up the underlying infrastructure, such as servers, networking, and storage, either on-premises or in the cloud.
+
+> - [Learn more about cluster infrastructure](https://kubernetes.io/docs/setup/)
 
 ### Perform a Version Upgrade on a Kubernetes Cluster Using Kubeadm
-Keeping your Kubernetes cluster updated is important for security and new features. Kubeadm provides a streamlined process for upgrading cluster versions.
-- [Learn more about upgrading](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
+> Keeping your Kubernetes cluster updated is important for security and new features. Kubeadm provides a streamlined process for upgrading cluster versions.
+
+> - [Learn more about upgrading](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
 
 ### Implement Etcd Backup and Restore
-Etcd is the key-value store used by Kubernetes to store cluster data. Regular backups ensure you can recover your cluster in case of a failure.
-- [Learn more about etcd backup and restore](https://etcd.io/docs/latest/op-guide/backup/)
+> Etcd is the key-value store used by Kubernetes to store cluster data. Regular backups ensure you can recover your cluster in case of a failure.
+
+> - [Learn more about etcd backup and restore](https://etcd.io/docs/latest/op-guide/backup/)
 
 
 # 2. Workloads & Scheduling (15%)
@@ -77,7 +81,7 @@ Etcd is the key-value store used by Kubernetes to store cluster data. Regular ba
 This section focuses on managing workloads and scheduling in Kubernetes, making up 15% of the CKA Exam. Below are the key topics explained with `kubectl` examples:
 
 ### Understand Deployments and How to Perform Rolling Updates and Rollbacks
-Deployments manage the lifecycle of applications. Rolling updates allow you to update applications without downtime, while rollbacks revert to a previous version if needed.
+> Deployments manage the lifecycle of applications. Rolling updates allow you to update applications without downtime, while rollbacks revert to a previous version if needed.
 
 #### Example:
 **Create a deployment:**
@@ -95,10 +99,10 @@ kubectl set image deployment/nginx nginx=nginx:1.22
 kubectl rollout undo deployment/nginx
 ```
 
-- [Learn more about deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+> - [Learn more about deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
 ### Use ConfigMaps and Secrets to Configure Applications
-ConfigMaps and Secrets store configuration data and sensitive information, allowing you to decouple configuration from application code.
+> ConfigMaps and Secrets store configuration data and sensitive information, allowing you to decouple configuration from application code.
 
 #### Example:
 **Create a ConfigMap:**
@@ -137,11 +141,12 @@ spec:
 kubectl apply -f pod.yaml
 ```
 
-- [Learn more about ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
-- [Learn more about Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+> - [Learn more about ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
+
+> - [Learn more about Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
 
 ### Know How to Scale Applications
-Scaling ensures your application can handle varying levels of traffic by adjusting the number of replicas.
+> Scaling ensures your application can handle varying levels of traffic by adjusting the number of replicas.
 
 #### Example:
 **Scale a deployment:**
@@ -154,10 +159,10 @@ kubectl scale deployment nginx --replicas=5
 kubectl autoscale deployment nginx --min=2 --max=10 --cpu-percent=50
 ```
 
-- [Learn more about scaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
+> - [Learn more about scaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
 
 ### Understand the Primitives Used to Create Robust, Self-Healing, Application Deployments
-Kubernetes primitives like Deployments, ReplicaSets, and Probes ensure applications are highly available and self-healing.
+> Kubernetes primitives like Deployments, ReplicaSets, and Probes ensure applications are highly available and self-healing.
 
 #### Example:
 **Add readiness and liveness probes:**
@@ -192,10 +197,10 @@ spec:
 kubectl apply -f deployment.yaml
 ```
 
-- [Learn more about probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+> - [Learn more about probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 
 ### Understand How Resource Limits Can Affect Pod Scheduling
-Resource requests and limits ensure fair allocation of cluster resources and influence pod scheduling.
+> Resource requests and limits ensure fair allocation of cluster resources and influence pod scheduling.
 
 #### Example:
 **Set resource requests and limits:**
@@ -220,10 +225,10 @@ spec:
 kubectl apply -f resource-demo.yaml
 ```
 
-- [Learn more about resource management](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+> - [Learn more about resource management](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
 
 ### Awareness of Manifest Management and Common Templating Tools
-Manifest management tools like Helm and Kustomize simplify deploying and managing Kubernetes applications.
+> Manifest management tools like Helm and Kustomize simplify deploying and managing Kubernetes applications.
 
 #### Example:
 **Using Kustomize:**
@@ -236,27 +241,30 @@ kubectl apply -k ./my-kustomization/
 helm install my-app ./my-chart
 ```
 
-- [Learn more about Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
-- [Learn more about Helm](https://helm.sh/docs/)
+> - [Learn more about Kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
+
+> - [Learn more about Helm](https://helm.sh/docs/)
 
 ---
 
 ### Resources to Prepare
-- [Kubernetes Documentation](https://kubernetes.io/docs/)
-- [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-- [Kubernetes Workloads](https://kubernetes.io/docs/concepts/workloads/)
+> - [Kubernetes Documentation](https://kubernetes.io/docs/)
 
+> - [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+
+> - [Kubernetes Workloads](https://kubernetes.io/docs/concepts/workloads/)
 
 ## 3. Services & Networking (20%)
 
 This section focuses on Kubernetes services and networking concepts, which make up 20% of the CKA Exam. Below are the key topics explained with `kubectl` examples:
 
 ### 1. Understand Host Networking Configuration on the Cluster Nodes
-Host networking involves understanding how network interfaces, IPs, and routes are configured on cluster nodes to ensure communication.
+> Host networking involves understanding how network interfaces, IPs, and routes are configured on cluster nodes to ensure communication.
 
 #### Key Concepts:
-- Check node network interfaces and routes using tools like `ip` or `ifconfig`.
-- Ensure proper setup of firewalls and ports for Kubernetes components.
+> - Check node network interfaces and routes using tools like `ip` or `ifconfig`.
+
+> - Ensure proper setup of firewalls and ports for Kubernetes components.
 
 **Example:**
 ```bash
@@ -265,10 +273,10 @@ kubectl get nodes -o wide
 ssh <node-name> "ip a"
 ```
 
-- [Learn more about cluster networking](https://kubernetes.io/docs/concepts/architecture/nodes/)
+> - [Learn more about cluster networking](https://kubernetes.io/docs/concepts/architecture/nodes/)
 
 ### 2. Understand Connectivity Between Pods
-Pods communicate with each other via the cluster network. All Pods are assigned a unique IP and can communicate without NAT.
+> Pods communicate with each other via the cluster network. All Pods are assigned a unique IP and can communicate without NAT.
 
 #### Example:
 **Test Pod-to-Pod connectivity:**
@@ -297,14 +305,16 @@ kubectl apply -f pods.yaml
 kubectl exec pod2 -- ping pod1
 ```
 
-- [Learn more about Pod networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
+> - [Learn more about Pod networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
 
 ### 3. Understand ClusterIP, NodePort, LoadBalancer Service Types and Endpoints
-Services expose Kubernetes applications for internal and external access. Common service types include:
+> Services expose Kubernetes applications for internal and external access. Common service types include:
 
-- **ClusterIP:** Default; exposes the service inside the cluster.
-- **NodePort:** Exposes the service on a static port on each node.
-- **LoadBalancer:** Uses cloud provider load balancers to expose services externally.
+> - **ClusterIP:** Default; exposes the service inside the cluster.
+
+> - **NodePort:** Exposes the service on a static port on each node.
+
+> - **LoadBalancer:** Uses cloud provider load balancers to expose services externally.
 
 #### Example:
 **Create a ClusterIP service:**
@@ -326,10 +336,10 @@ spec:
 kubectl apply -f service.yaml
 ```
 
-- [Learn more about services](https://kubernetes.io/docs/concepts/services-networking/service/)
+> - [Learn more about services](https://kubernetes.io/docs/concepts/services-networking/service/)
 
 ### 4. Know How to Use Ingress Controllers and Ingress Resources
-Ingress provides HTTP and HTTPS routing to applications inside the cluster using hostnames and paths.
+> Ingress provides HTTP and HTTPS routing to applications inside the cluster using hostnames and paths.
 
 #### Example:
 **Deploy an Ingress resource:**
@@ -355,10 +365,10 @@ spec:
 kubectl apply -f ingress.yaml
 ```
 
-- [Learn more about Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+> - [Learn more about Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
 ### 5. Know How to Configure and Use CoreDNS
-CoreDNS is a DNS server that provides name resolution within the Kubernetes cluster.
+> CoreDNS is a DNS server that provides name resolution within the Kubernetes cluster.
 
 #### Example:
 **Check CoreDNS ConfigMap:**
@@ -370,15 +380,17 @@ kubectl -n kube-system get configmap coredns -o yaml
 kubectl exec -it <pod-name> -- nslookup kubernetes.default
 ```
 
-- [Learn more about CoreDNS](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)
+> - [Learn more about CoreDNS](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)
 
 ### 6. Choose an Appropriate Container Network Interface (CNI) Plugin
-CNIs enable networking in Kubernetes by providing Pod-to-Pod connectivity.
+> CNIs enable networking in Kubernetes by providing Pod-to-Pod connectivity.
 
 #### Popular CNI Plugins:
-- **Flannel:** Simple and easy-to-configure.
-- **Calico:** Offers advanced networking and network policy capabilities.
-- **Weave Net:** Supports encrypted communication.
+> - **Flannel:** Simple and easy-to-configure.
+
+> - **Calico:** Offers advanced networking and network policy capabilities.
+
+> - **Weave Net:** Supports encrypted communication.
 
 #### Example:
 **Install Calico as a CNI:**
@@ -386,14 +398,16 @@ CNIs enable networking in Kubernetes by providing Pod-to-Pod connectivity.
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 ```
 
-- [Learn more about CNIs](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
+> - [Learn more about CNIs](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
 
 ---
 
 ### Resources to Prepare
-- [Kubernetes Documentation](https://kubernetes.io/docs/)
-- [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-- [Kubernetes Services](https://kubernetes.io/docs/concepts/services-networking/service/)
+> - [Kubernetes Documentation](https://kubernetes.io/docs/)
+
+> - [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+
+> - [Kubernetes Services](https://kubernetes.io/docs/concepts/services-networking/service/)
 
 
 ## 4. Storage (10%)
@@ -401,7 +415,7 @@ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 This section focuses on Kubernetes storage concepts, which make up 10% of the CKA Exam. Below are the key topics explained with `kubectl` examples:
 
 ### 1. Understand Storage Classes and Persistent Volumes
-Storage Classes define the types of storage available, while Persistent Volumes (PVs) represent storage in the cluster.
+> Storage Classes define the types of storage available, while Persistent Volumes (PVs) represent storage in the cluster.
 
 #### Example:
 **Create a Storage Class:**
@@ -438,16 +452,19 @@ spec:
 kubectl apply -f pv.yaml
 ```
 
-- [Learn more about Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
-- [Learn more about Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+> - [Learn more about Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+
+> - [Learn more about Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
 
 ### 2. Understand Volume Mode, Access Modes, and Reclaim Policies for Volumes
-Volumes can have different modes and access settings to fit application needs. Reclaim policies determine what happens to a volume after it is released.
+> Volumes can have different modes and access settings to fit application needs. Reclaim policies determine what happens to a volume after it is released.
 
 #### Key Modes and Policies:
-- **Volume Modes:** Filesystem, Block.
-- **Access Modes:** ReadWriteOnce, ReadOnlyMany, ReadWriteMany.
-- **Reclaim Policies:** Retain, Delete, Recycle.
+> - **Volume Modes:** Filesystem, Block.
+
+> - **Access Modes:** ReadWriteOnce, ReadOnlyMany, ReadWriteMany.
+
+> - **Reclaim Policies:** Retain, Delete, Recycle.
 
 **Example:**
 Check PV details:
@@ -455,11 +472,12 @@ Check PV details:
 kubectl describe pv pv-demo
 ```
 
-- [Learn more about Volume Modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-modes)
-- [Learn more about Access Modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+> - [Learn more about Volume Modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-modes)
+
+> - [Learn more about Access Modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
 
 ### 3. Understand Persistent Volume Claims (PVC) Primitive
-PVCs allow Pods to request specific storage resources from PVs.
+> PVCs allow Pods to request specific storage resources from PVs.
 
 #### Example:
 **Create a Persistent Volume Claim:**
@@ -502,10 +520,10 @@ spec:
 kubectl apply -f pod.yaml
 ```
 
-- [Learn more about PVCs](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)
+> - [Learn more about PVCs](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)
 
 ### 4. Know How to Configure Applications with Persistent Storage
-Applications often need persistent storage to retain data. Configure storage by mounting volumes to application Pods.
+> Applications often need persistent storage to retain data. Configure storage by mounting volumes to application Pods.
 
 #### Example:
 **Deployment with Persistent Storage:**
@@ -539,14 +557,16 @@ spec:
 kubectl apply -f deployment.yaml
 ```
 
-- [Learn more about configuring applications with storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
+> - [Learn more about configuring applications with storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 
 ---
 
 ### Resources to Prepare
-- [Kubernetes Documentation](https://kubernetes.io/docs/)
-- [Persistent Volumes Guide](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
-- [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+> - [Kubernetes Documentation](https://kubernetes.io/docs/)
+
+> - [Persistent Volumes Guide](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+
+> - [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
 
 ## 5. Troubleshooting (30%)
@@ -554,7 +574,7 @@ kubectl apply -f deployment.yaml
 This section focuses on troubleshooting skills, which constitute 30% of the CKA Exam. Below are the key topics explained with `kubectl` examples:
 
 ### 1. Evaluate Cluster and Node Logging
-Logs from the cluster and nodes help identify issues with Kubernetes components and nodes.
+> Logs from the cluster and nodes help identify issues with Kubernetes components and nodes.
 
 #### Example:
 **View cluster events:**
@@ -568,10 +588,10 @@ ssh <node-name>
 sudo journalctl -u kubelet
 ```
 
-- [Learn more about Kubernetes logging](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
+> - [Learn more about Kubernetes logging](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
 
 ### 2. Understand How to Monitor Applications
-Application monitoring involves tracking application performance and resource usage using tools like `kubectl top` or external monitoring solutions.
+> Application monitoring involves tracking application performance and resource usage using tools like `kubectl top` or external monitoring solutions.
 
 #### Example:
 **Check resource usage of Pods:**
@@ -584,10 +604,10 @@ kubectl top pod
 kubectl top node
 ```
 
-- [Learn more about monitoring](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/)
+> - [Learn more about monitoring](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/)
 
 ### 3. Manage Container stdout & stderr Logs
-Logs from containerized applications help diagnose issues in application behavior.
+> Logs from containerized applications help diagnose issues in application behavior.
 
 #### Example:
 **View logs from a Pod:**
@@ -600,10 +620,10 @@ kubectl logs <pod-name>
 kubectl logs <pod-name> -c <container-name>
 ```
 
-- [Learn more about container logs](https://kubernetes.io/docs/concepts/cluster-administration/logging/#logging-at-the-node-level)
+> - [Learn more about container logs](https://kubernetes.io/docs/concepts/cluster-administration/logging/#logging-at-the-node-level)
 
 ### 4. Troubleshoot Application Failure
-Application failures often arise from misconfigurations, missing dependencies, or resource constraints.
+> Application failures often arise from misconfigurations, missing dependencies, or resource constraints.
 
 #### Example:
 **Describe a failing Pod to identify issues:**
@@ -616,10 +636,10 @@ kubectl describe pod <pod-name>
 kubectl exec -it <pod-name> -- /bin/sh
 ```
 
-- [Learn more about troubleshooting applications](https://kubernetes.io/docs/tasks/debug/debug-application/)
+> - [Learn more about troubleshooting applications](https://kubernetes.io/docs/tasks/debug/debug-application/)
 
 ### 5. Troubleshoot Cluster Component Failure
-Cluster component failures can disrupt the entire cluster. Key components include the API server, scheduler, controller manager, and etcd.
+> Cluster component failures can disrupt the entire cluster. Key components include the API server, scheduler, controller manager, and etcd.
 
 #### Example:
 **Check the status of cluster components:**
@@ -632,10 +652,10 @@ kubectl get componentstatuses
 kubectl logs -n kube-system <component-pod-name>
 ```
 
-- [Learn more about troubleshooting cluster components](https://kubernetes.io/docs/tasks/debug/debug-cluster/)
+> - [Learn more about troubleshooting cluster components](https://kubernetes.io/docs/tasks/debug/debug-cluster/)
 
 ### 6. Troubleshoot Networking
-Networking issues can affect Pod communication, service access, or external connectivity.
+> Networking issues can affect Pod communication, service access, or external connectivity.
 
 #### Example:
 **Test Pod connectivity:**
@@ -653,14 +673,16 @@ kubectl describe service <service-name>
 kubectl exec -it <pod-name> -- nslookup <service-name>
 ```
 
-- [Learn more about troubleshooting networking](https://kubernetes.io/docs/tasks/debug/debug-cluster/dns-debugging-resolution/)
+> - [Learn more about troubleshooting networking](https://kubernetes.io/docs/tasks/debug/debug-cluster/dns-debugging-resolution/)
 
 ---
 
 ### Resources to Prepare
-- [Kubernetes Documentation](https://kubernetes.io/docs/)
-- [Troubleshooting Guide](https://kubernetes.io/docs/tasks/debug/)
-- [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+> - [Kubernetes Documentation](https://kubernetes.io/docs/)
+
+> - [Troubleshooting Guide](https://kubernetes.io/docs/tasks/debug/)
+
+> - [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
 
 
