@@ -247,112 +247,422 @@ helm install my-app ./my-chart
 - [Kubernetes Workloads](https://kubernetes.io/docs/concepts/workloads/)
 
 
+## 3. Services & Networking (20%)
 
-# 3. Services & Networking (20%)
+This section focuses on Kubernetes services and networking concepts, which make up 20% of the CKA Exam. Below are the key topics explained with `kubectl` examples:
 
-- [x] Understand host networking configuration on the cluster nodes
-- [x] Understand connectivity between Pods
-- [x] Understand ClusterIP, NodePort, LoadBalancer service types and endpoints
-- [x] Know how to use Ingress controllers and Ingress resources
-- [x] Know how to configure and use CoreDNS
-- [x] Choose an appropriate container network interface plugin
+### 1. Understand Host Networking Configuration on the Cluster Nodes
+Host networking involves understanding how network interfaces, IPs, and routes are configured on cluster nodes to ensure communication.
+
+#### Key Concepts:
+- Check node network interfaces and routes using tools like `ip` or `ifconfig`.
+- Ensure proper setup of firewalls and ports for Kubernetes components.
+
+**Example:**
+```bash
+# List network interfaces on a node
+kubectl get nodes -o wide
+ssh <node-name> "ip a"
+```
+
+- [Learn more about cluster networking](https://kubernetes.io/docs/concepts/architecture/nodes/)
+
+### 2. Understand Connectivity Between Pods
+Pods communicate with each other via the cluster network. All Pods are assigned a unique IP and can communicate without NAT.
+
+#### Example:
+**Test Pod-to-Pod connectivity:**
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod2
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command: ["sh", "-c", "sleep 3600"]
+```
+```bash
+kubectl apply -f pods.yaml
+kubectl exec pod2 -- ping pod1
+```
+
+- [Learn more about Pod networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
+
+### 3. Understand ClusterIP, NodePort, LoadBalancer Service Types and Endpoints
+Services expose Kubernetes applications for internal and external access. Common service types include:
+
+- **ClusterIP:** Default; exposes the service inside the cluster.
+- **NodePort:** Exposes the service on a static port on each node.
+- **LoadBalancer:** Uses cloud provider load balancers to expose services externally.
+
+#### Example:
+**Create a ClusterIP service:**
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-service
+spec:
+  selector:
+    app: my-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP
+```
+```bash
+kubectl apply -f service.yaml
+```
+
+- [Learn more about services](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+### 4. Know How to Use Ingress Controllers and Ingress Resources
+Ingress provides HTTP and HTTPS routing to applications inside the cluster using hostnames and paths.
+
+#### Example:
+**Deploy an Ingress resource:**
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: clusterip-service
+            port:
+              number: 80
+```
+```bash
+kubectl apply -f ingress.yaml
+```
+
+- [Learn more about Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+
+### 5. Know How to Configure and Use CoreDNS
+CoreDNS is a DNS server that provides name resolution within the Kubernetes cluster.
+
+#### Example:
+**Check CoreDNS ConfigMap:**
+```bash
+kubectl -n kube-system get configmap coredns -o yaml
+```
+**Test DNS resolution:**
+```bash
+kubectl exec -it <pod-name> -- nslookup kubernetes.default
+```
+
+- [Learn more about CoreDNS](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)
+
+### 6. Choose an Appropriate Container Network Interface (CNI) Plugin
+CNIs enable networking in Kubernetes by providing Pod-to-Pod connectivity.
+
+#### Popular CNI Plugins:
+- **Flannel:** Simple and easy-to-configure.
+- **Calico:** Offers advanced networking and network policy capabilities.
+- **Weave Net:** Supports encrypted communication.
+
+#### Example:
+**Install Calico as a CNI:**
+```bash
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+```
+
+- [Learn more about CNIs](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
+
+---
+
+### Resources to Prepare
+- [Kubernetes Documentation](https://kubernetes.io/docs/)
+- [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+- [Kubernetes Services](https://kubernetes.io/docs/concepts/services-networking/service/)
 
 
-- Understand host networking configuration on the cluster nodes.
+## 4. Storage (10%)
 
-    - [Kubernetes Documentation > Concepts > Cluster Administration > Cluster Networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)<sup>Doc</sup>
+This section focuses on Kubernetes storage concepts, which make up 10% of the CKA Exam. Below are the key topics explained with `kubectl` examples:
 
-- Understand connectivity between Pods.
+### 1. Understand Storage Classes and Persistent Volumes
+Storage Classes define the types of storage available, while Persistent Volumes (PVs) represent storage in the cluster.
 
-    - [Kubernetes Documentation > Concepts > Workloads > Pods > Networking](https://kubernetes.io/docs/concepts/workloads/pods/#pod-networking)<sup>Doc</sup>
+#### Example:
+**Create a Storage Class:**
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast-storage
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+```
+```bash
+kubectl apply -f storageclass.yaml
+```
 
-    - [GitHub > Kubernetes Community Documentation > Design Proposals > Networking](https://raw.githubusercontent.com/kubernetes/design-proposals-archive/main/network/networking.md)<sup>Doc</sup>
+**Create a Persistent Volume:**
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-demo
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: fast-storage
+  hostPath:
+    path: /mnt/data
+```
+```bash
+kubectl apply -f pv.yaml
+```
 
-- Understand ClusterIP, NodePort, LoadBalancer service types and endpoints.
+- [Learn more about Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+- [Learn more about Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
 
-    - [Working with Kubernetes Services](https://teckbootcamps.com/working-with-kubernetes-services/))<sup>Blog</sup>
+### 2. Understand Volume Mode, Access Modes, and Reclaim Policies for Volumes
+Volumes can have different modes and access settings to fit application needs. Reclaim policies determine what happens to a volume after it is released.
 
-    - [Kubernetes Documentation > Concepts > Services, Load Balancing, and Networking > Service](https://kubernetes.io/docs/concepts/services-networking/service/)<sup>Doc</sup>
+#### Key Modes and Policies:
+- **Volume Modes:** Filesystem, Block.
+- **Access Modes:** ReadWriteOnce, ReadOnlyMany, ReadWriteMany.
+- **Reclaim Policies:** Retain, Delete, Recycle.
+
+**Example:**
+Check PV details:
+```bash
+kubectl describe pv pv-demo
+```
+
+- [Learn more about Volume Modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-modes)
+- [Learn more about Access Modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+
+### 3. Understand Persistent Volume Claims (PVC) Primitive
+PVCs allow Pods to request specific storage resources from PVs.
+
+#### Example:
+**Create a Persistent Volume Claim:**
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-demo
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+  storageClassName: fast-storage
+```
+```bash
+kubectl apply -f pvc.yaml
+```
+
+**Use a PVC in a Pod:**
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-pvc
+spec:
+  containers:
+  - name: app-container
+    image: nginx
+    volumeMounts:
+    - mountPath: "/data"
+      name: storage
+  volumes:
+  - name: storage
+    persistentVolumeClaim:
+      claimName: pvc-demo
+```
+```bash
+kubectl apply -f pod.yaml
+```
+
+- [Learn more about PVCs](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)
+
+### 4. Know How to Configure Applications with Persistent Storage
+Applications often need persistent storage to retain data. Configure storage by mounting volumes to application Pods.
+
+#### Example:
+**Deployment with Persistent Storage:**
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-storage
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: storage-app
+  template:
+    metadata:
+      labels:
+        app: storage-app
+    spec:
+      containers:
+      - name: app-container
+        image: nginx
+        volumeMounts:
+        - name: app-storage
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: app-storage
+        persistentVolumeClaim:
+          claimName: pvc-demo
+```
+```bash
+kubectl apply -f deployment.yaml
+```
+
+- [Learn more about configuring applications with storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
+
+---
+
+### Resources to Prepare
+- [Kubernetes Documentation](https://kubernetes.io/docs/)
+- [Persistent Volumes Guide](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+- [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
 
-- Know how to use Ingress controllers and Ingress resources.
+## 5. Troubleshooting (30%)
 
-    - [Introducing  Gateway API , Ingress gateway and Service Mesh in Kubernetes](https://teckbootcamps.com/introducing-gateway-api-ingress-gateway-and-service-mesh-in-kubernetes/))<sup>Blog</sup>
+This section focuses on troubleshooting skills, which constitute 30% of the CKA Exam. Below are the key topics explained with `kubectl` examples:
 
-    - [Kubernetes Documentation > Concepts > Services, Load Balancing, and Networking > Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)<sup>Doc</sup>
-    - [Kubernetes Documentation > Concepts > Services, Load Balancing, and Networking > Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)<sup>Doc</sup>
+### 1. Evaluate Cluster and Node Logging
+Logs from the cluster and nodes help identify issues with Kubernetes components and nodes.
 
-- Know how to configure and use CoreDNS.
+#### Example:
+**View cluster events:**
+```bash
+kubectl get events --sort-by='.metadata.creationTimestamp'
+```
 
-    - [Kubernetes Documentation > Tasks > Administer a Cluster > Using CoreDNS for Service Discovery](https://kubernetes.io/docs/tasks/administer-cluster/coredns/)<sup>Doc</sup>
+**Check kubelet logs on a node:**
+```bash
+ssh <node-name>
+sudo journalctl -u kubelet
+```
 
-- Choose an appropriate container network interface plugin.
+- [Learn more about Kubernetes logging](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
 
-    - [Kubernetes Documentation > Concepts > Extending Kubernetes > Compute, Storage, and Networking Extensions > Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)<sup>Doc</sup>
+### 2. Understand How to Monitor Applications
+Application monitoring involves tracking application performance and resource usage using tools like `kubectl top` or external monitoring solutions.
+
+#### Example:
+**Check resource usage of Pods:**
+```bash
+kubectl top pod
+```
+
+**Check resource usage of nodes:**
+```bash
+kubectl top node
+```
+
+- [Learn more about monitoring](https://kubernetes.io/docs/tasks/debug/debug-cluster/resource-usage-monitoring/)
+
+### 3. Manage Container stdout & stderr Logs
+Logs from containerized applications help diagnose issues in application behavior.
+
+#### Example:
+**View logs from a Pod:**
+```bash
+kubectl logs <pod-name>
+```
+
+**View logs from a specific container in a Pod:**
+```bash
+kubectl logs <pod-name> -c <container-name>
+```
+
+- [Learn more about container logs](https://kubernetes.io/docs/concepts/cluster-administration/logging/#logging-at-the-node-level)
+
+### 4. Troubleshoot Application Failure
+Application failures often arise from misconfigurations, missing dependencies, or resource constraints.
+
+#### Example:
+**Describe a failing Pod to identify issues:**
+```bash
+kubectl describe pod <pod-name>
+```
+
+**Debug a failing Pod:**
+```bash
+kubectl exec -it <pod-name> -- /bin/sh
+```
+
+- [Learn more about troubleshooting applications](https://kubernetes.io/docs/tasks/debug/debug-application/)
+
+### 5. Troubleshoot Cluster Component Failure
+Cluster component failures can disrupt the entire cluster. Key components include the API server, scheduler, controller manager, and etcd.
+
+#### Example:
+**Check the status of cluster components:**
+```bash
+kubectl get componentstatuses
+```
+
+**Check the logs of a specific component:**
+```bash
+kubectl logs -n kube-system <component-pod-name>
+```
+
+- [Learn more about troubleshooting cluster components](https://kubernetes.io/docs/tasks/debug/debug-cluster/)
+
+### 6. Troubleshoot Networking
+Networking issues can affect Pod communication, service access, or external connectivity.
+
+#### Example:
+**Test Pod connectivity:**
+```bash
+kubectl exec -it <pod-name> -- ping <target-pod-ip>
+```
+
+**Debug Service issues:**
+```bash
+kubectl describe service <service-name>
+```
+
+**Test DNS resolution:**
+```bash
+kubectl exec -it <pod-name> -- nslookup <service-name>
+```
+
+- [Learn more about troubleshooting networking](https://kubernetes.io/docs/tasks/debug/debug-cluster/dns-debugging-resolution/)
+
+---
+
+### Resources to Prepare
+- [Kubernetes Documentation](https://kubernetes.io/docs/)
+- [Troubleshooting Guide](https://kubernetes.io/docs/tasks/debug/)
+- [Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
 
-# 4. Storage (10 %)
-
-- [x] Understand storage classes, persistent volumes
-- [x] Understand volume mode, access modes and reclaim policies for volumes
-- [x] Understand persistent volume claims primitive
-- [x] Know how to configure applications with persistent storage
-
-
-- Understand storage classes, persistent volumes.
-
-    - [Understanding Kubernetes Volumes and Configuration Data](https://teckbootcamps.com/understanding-kubernetes-volumes-and-configuration-data/)<sup>Blog</sup>
-    - [Kubernetes Documentation > Concepts > Storage > Storage Classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)<sup>Doc</sup>
-    - [Kubernetes Documentation > Concepts > Storage > Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)<sup>Doc</sup>
-
-- Understand volume mode, access modes and reclaim policies for volumes.
-
-    - [Kubernetes Documentation > Concepts > Storage > Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes)<sup>Doc</sup>
-
-- Understand persistent volume claims primitive.
-    - [Understanding Kubernetes Volumes and Configuration Data](https://teckbootcamps.com/understanding-kubernetes-volumes-and-configuration-data/)<sup>Blog</sup>
-    - [Kubernetes Documentation > Concepts > Storage > Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)<sup>Doc</sup>
-
-- Know how to configure applications with persistent storage.
-
-    - [Kubernetes Documentation > Tasks > Configure Pods and Containers > Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume)<sup>Doc</sup>
-
-
-# 5. Troubleshooting (30 %)
-
-- [x] Evaluate cluster and node logging
-- [x] Understand how to monitor applications
-- [x] Manage container stdout & stderr logs
-- [x] Troubleshoot application failure
-- [x] Troubleshoot cluster component failure
-- [x] Troubleshoot networking
-
-
-- Evaluate cluster and node logging.
-
-    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Troubleshoot Clusters](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster/)<sup>Doc</sup>
-
-- Understand how to monitor applications.
-    - [Kubernetes Monitoring and Logging By Examples](https://teckbootcamps.com/kubernetes-monitoring-and-logging-by-examples/)<sup>Blog</sup>
-    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Tools for Monitoring Resources](https://kubernetes.io/docs/tasks/debug-application-cluster/resource-usage-monitoring/)<sup>Doc</sup>
-
-- Manage container stdout & stderr logs.
-
-    - [Kubernetes Documentation > Concepts > Cluster Administration > Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/)<sup>Doc</sup>
-
-- Troubleshoot application failure.
-
-    - [Troubleshooting the Process of a Kubernetes Pod being killed](https://teckbootcamps.com/troubleshooting-the-process-of-a-kubernetes-pod-being-killed/)<sup>Blog</sup>
-    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Troubleshoot Applications](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application/)<sup>Doc</sup>
-    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Application Introspection and Debugging](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application-introspection/)<sup>Doc</sup>
-
-- Troubleshoot cluster component failure.
-
-    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Troubleshoot Clusters](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster/)<sup>Doc</sup>
-
-- Troubleshoot networking.
-
-    - [Kubernetes Documentation > Tasks > Monitoring, Logging, and Debugging > Debug Services](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/)<sup>Doc</sup>
 
 # CKA Exam Questions And Answers
 
