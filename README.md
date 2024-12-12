@@ -31,6 +31,13 @@ Save 30% using Coupon code **TECK30** on all the Linux Foundation training and c
 
 > Announcement: The CKA exam syllabus will be updated on January 15th, 2025. Read our CKA exam update [SEE BLOG POST](https://teckbootcamps.com/cka-exam-update-new-features-and-removed-content-explained/) to learn more.
 
+## Table of Contents
+
+- [CKA Exam Syllabus (Updated Kubernetes 1.31)](#cka-exam-syllabus-updated-kubernetes-131)
+- [CKA Exam Questions And Answers](#cka-exam-questions-and-answers)
+- [Additional Resources](#additional-resources)
+- [Practice](#practice)
+
 
 ## CKA Exam Syllabus (Updated Kubernetes 1.31  )
 
@@ -686,8 +693,7 @@ kubectl exec -it <pod-name> -- nslookup <service-name>
 
 
 
-# CKA Exam Questions And Answers
-
+## CKA Exam Questions And Answers
 
 ## Schedule Pod on Master Node
 > Create a single Pod of image httpd:2.4.41-alpine in Namespace default. The Pod should be named pod1 and the container should be named pod1-container. This Pod should only be scheduled on a master node, do not add new labels any nodes.
@@ -2021,6 +2027,6 @@ Practice a lot with Kubernetes:
 - [Learning Playground - by Docker](https://labs.play-with-k8s.com/)
 
 
-# 💬 Share To Your Network
+## 💬 Share To Your Network
 If this repo has helped you in any way, feel free to share !
 
