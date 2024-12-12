@@ -84,17 +84,17 @@ This section focuses on managing workloads and scheduling in Kubernetes, making 
 > Deployments manage the lifecycle of applications. Rolling updates allow you to update applications without downtime, while rollbacks revert to a previous version if needed.
 
 #### Example:
-**Create a deployment:**
+> **Create a deployment:**
 ```bash
 kubectl create deployment nginx --image=nginx:1.21
 ```
 
-**Perform a rolling update:**
+> **Perform a rolling update:**
 ```bash
 kubectl set image deployment/nginx nginx=nginx:1.22
 ```
 
-**Rollback to a previous version:**
+> **Rollback to a previous version:**
 ```bash
 kubectl rollout undo deployment/nginx
 ```
@@ -105,17 +105,17 @@ kubectl rollout undo deployment/nginx
 > ConfigMaps and Secrets store configuration data and sensitive information, allowing you to decouple configuration from application code.
 
 #### Example:
-**Create a ConfigMap:**
+> **Create a ConfigMap:**
 ```bash
 kubectl create configmap app-config --from-literal=key1=value1
 ```
 
-**Create a Secret:**
+> **Create a Secret:**
 ```bash
 kubectl create secret generic app-secret --from-literal=password=mysecret
 ```
 
-**Use them in a Pod:**
+> **Use them in a Pod:**
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -149,12 +149,12 @@ kubectl apply -f pod.yaml
 > Scaling ensures your application can handle varying levels of traffic by adjusting the number of replicas.
 
 #### Example:
-**Scale a deployment:**
+> **Scale a deployment:**
 ```bash
 kubectl scale deployment nginx --replicas=5
 ```
 
-**Autoscale based on CPU usage:**
+> **Autoscale based on CPU usage:**
 ```bash
 kubectl autoscale deployment nginx --min=2 --max=10 --cpu-percent=50
 ```
@@ -165,7 +165,7 @@ kubectl autoscale deployment nginx --min=2 --max=10 --cpu-percent=50
 > Kubernetes primitives like Deployments, ReplicaSets, and Probes ensure applications are highly available and self-healing.
 
 #### Example:
-**Add readiness and liveness probes:**
+> **Add readiness and liveness probes:**
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -203,7 +203,7 @@ kubectl apply -f deployment.yaml
 > Resource requests and limits ensure fair allocation of cluster resources and influence pod scheduling.
 
 #### Example:
-**Set resource requests and limits:**
+> **Set resource requests and limits:**
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -231,12 +231,12 @@ kubectl apply -f resource-demo.yaml
 > Manifest management tools like Helm and Kustomize simplify deploying and managing Kubernetes applications.
 
 #### Example:
-**Using Kustomize:**
+> **Using Kustomize:**
 ```bash
 kubectl apply -k ./my-kustomization/
 ```
 
-**Using Helm:**
+> **Using Helm:**
 ```bash
 helm install my-app ./my-chart
 ```
@@ -266,7 +266,7 @@ This section focuses on Kubernetes services and networking concepts, which make 
 
 > - Ensure proper setup of firewalls and ports for Kubernetes components.
 
-**Example:**
+> **Example:**
 ```bash
 # List network interfaces on a node
 kubectl get nodes -o wide
@@ -279,7 +279,7 @@ ssh <node-name> "ip a"
 > Pods communicate with each other via the cluster network. All Pods are assigned a unique IP and can communicate without NAT.
 
 #### Example:
-**Test Pod-to-Pod connectivity:**
+> **Test Pod-to-Pod connectivity:**
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -317,7 +317,7 @@ kubectl exec pod2 -- ping pod1
 > - **LoadBalancer:** Uses cloud provider load balancers to expose services externally.
 
 #### Example:
-**Create a ClusterIP service:**
+> **Create a ClusterIP service:**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -342,7 +342,7 @@ kubectl apply -f service.yaml
 > Ingress provides HTTP and HTTPS routing to applications inside the cluster using hostnames and paths.
 
 #### Example:
-**Deploy an Ingress resource:**
+> **Deploy an Ingress resource:**
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -371,11 +371,11 @@ kubectl apply -f ingress.yaml
 > CoreDNS is a DNS server that provides name resolution within the Kubernetes cluster.
 
 #### Example:
-**Check CoreDNS ConfigMap:**
+> **Check CoreDNS ConfigMap:**
 ```bash
 kubectl -n kube-system get configmap coredns -o yaml
 ```
-**Test DNS resolution:**
+> **Test DNS resolution:**
 ```bash
 kubectl exec -it <pod-name> -- nslookup kubernetes.default
 ```
@@ -393,7 +393,7 @@ kubectl exec -it <pod-name> -- nslookup kubernetes.default
 > - **Weave Net:** Supports encrypted communication.
 
 #### Example:
-**Install Calico as a CNI:**
+> **Install Calico as a CNI:**
 ```bash
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 ```
@@ -418,7 +418,7 @@ This section focuses on Kubernetes storage concepts, which make up 10% of the CK
 > Storage Classes define the types of storage available, while Persistent Volumes (PVs) represent storage in the cluster.
 
 #### Example:
-**Create a Storage Class:**
+> **Create a Storage Class:**
 ```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -432,7 +432,7 @@ parameters:
 kubectl apply -f storageclass.yaml
 ```
 
-**Create a Persistent Volume:**
+> **Create a Persistent Volume:**
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
@@ -467,7 +467,7 @@ kubectl apply -f pv.yaml
 > - **Reclaim Policies:** Retain, Delete, Recycle.
 
 **Example:**
-Check PV details:
+> Check PV details:
 ```bash
 kubectl describe pv pv-demo
 ```
@@ -480,7 +480,7 @@ kubectl describe pv pv-demo
 > PVCs allow Pods to request specific storage resources from PVs.
 
 #### Example:
-**Create a Persistent Volume Claim:**
+> **Create a Persistent Volume Claim:**
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -498,7 +498,7 @@ spec:
 kubectl apply -f pvc.yaml
 ```
 
-**Use a PVC in a Pod:**
+> **Use a PVC in a Pod:**
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -526,7 +526,7 @@ kubectl apply -f pod.yaml
 > Applications often need persistent storage to retain data. Configure storage by mounting volumes to application Pods.
 
 #### Example:
-**Deployment with Persistent Storage:**
+> **Deployment with Persistent Storage:**
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -577,12 +577,12 @@ This section focuses on troubleshooting skills, which constitute 30% of the CKA 
 > Logs from the cluster and nodes help identify issues with Kubernetes components and nodes.
 
 #### Example:
-**View cluster events:**
+> **View cluster events:**
 ```bash
 kubectl get events --sort-by='.metadata.creationTimestamp'
 ```
 
-**Check kubelet logs on a node:**
+> **Check kubelet logs on a node:**
 ```bash
 ssh <node-name>
 sudo journalctl -u kubelet
@@ -594,12 +594,12 @@ sudo journalctl -u kubelet
 > Application monitoring involves tracking application performance and resource usage using tools like `kubectl top` or external monitoring solutions.
 
 #### Example:
-**Check resource usage of Pods:**
+> **Check resource usage of Pods:**
 ```bash
 kubectl top pod
 ```
 
-**Check resource usage of nodes:**
+> **Check resource usage of nodes:**
 ```bash
 kubectl top node
 ```
@@ -610,12 +610,12 @@ kubectl top node
 > Logs from containerized applications help diagnose issues in application behavior.
 
 #### Example:
-**View logs from a Pod:**
+> **View logs from a Pod:**
 ```bash
 kubectl logs <pod-name>
 ```
 
-**View logs from a specific container in a Pod:**
+> **View logs from a specific container in a Pod:**
 ```bash
 kubectl logs <pod-name> -c <container-name>
 ```
@@ -626,12 +626,12 @@ kubectl logs <pod-name> -c <container-name>
 > Application failures often arise from misconfigurations, missing dependencies, or resource constraints.
 
 #### Example:
-**Describe a failing Pod to identify issues:**
+> **Describe a failing Pod to identify issues:**
 ```bash
 kubectl describe pod <pod-name>
 ```
 
-**Debug a failing Pod:**
+> **Debug a failing Pod:**
 ```bash
 kubectl exec -it <pod-name> -- /bin/sh
 ```
@@ -642,12 +642,12 @@ kubectl exec -it <pod-name> -- /bin/sh
 > Cluster component failures can disrupt the entire cluster. Key components include the API server, scheduler, controller manager, and etcd.
 
 #### Example:
-**Check the status of cluster components:**
+> **Check the status of cluster components:**
 ```bash
 kubectl get componentstatuses
 ```
 
-**Check the logs of a specific component:**
+> **Check the logs of a specific component:**
 ```bash
 kubectl logs -n kube-system <component-pod-name>
 ```
@@ -658,17 +658,17 @@ kubectl logs -n kube-system <component-pod-name>
 > Networking issues can affect Pod communication, service access, or external connectivity.
 
 #### Example:
-**Test Pod connectivity:**
+> **Test Pod connectivity:**
 ```bash
 kubectl exec -it <pod-name> -- ping <target-pod-ip>
 ```
 
-**Debug Service issues:**
+> **Debug Service issues:**
 ```bash
 kubectl describe service <service-name>
 ```
 
-**Test DNS resolution:**
+> **Test DNS resolution:**
 ```bash
 kubectl exec -it <pod-name> -- nslookup <service-name>
 ```
