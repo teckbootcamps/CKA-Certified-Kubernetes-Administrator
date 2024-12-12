@@ -774,11 +774,11 @@ master nodes usually have a taint defined
 
 ## Storage, PV, PVC, Pod volume
 
-Create a new PersistentVolume named safari-pv. It should have a capacity of 2Gi, accessMode ReadWriteOnce, hostPath /Volumes/Data and no storageClassName defined.
+> Create a new PersistentVolume named safari-pv. It should have a capacity of 2Gi, accessMode ReadWriteOnce, hostPath /Volumes/Data and no storageClassName defined.
 
-Next create a new PersistentVolumeClaim in Namespace project-tiger named safari-pvc . It should request 2Gi storage, accessMode ReadWriteOnce and should not define a storageClassName. The PVC should bound to the PV correctly.
+> Next create a new PersistentVolumeClaim in Namespace project-tiger named safari-pvc . It should request 2Gi storage, accessMode ReadWriteOnce and should not define a storageClassName. The PVC should bound to the PV correctly.
 
-Finally create a new Deployment safari in Namespace project-tiger which mounts that volume at /tmp/safari-data. The Pods of that Deployment should be of image httpd:2.4.41-alpine.
+> Finally create a new Deployment safari in Namespace project-tiger which mounts that volume at /tmp/safari-data. The Pods of that Deployment should be of image httpd:2.4.41-alpine.
 
 <details><summary>Show Answer</summary>
 <p>
@@ -903,7 +903,7 @@ k -n project-tiger describe pod safari-5cbf46d6d-mjhsb  | grep -A2 Mounts:
 
 
 ## RBAC ServiceAccount Role RoleBinding
-Create a new ServiceAccount processor in Namespace project-hamster. Create a Role and RoleBinding, both named processor as well. These should allow the new SA to only create Secrets and ConfigMaps in that Namespace.
+> Create a new ServiceAccount processor in Namespace project-hamster. Create a Role and RoleBinding, both named processor as well. These should allow the new SA to only create Secrets and ConfigMaps in that Namespace.
 
 <details><summary>Show Answer</summary>
 <p>
@@ -1033,7 +1033,9 @@ no
 </details>
  
 ##  DaemonSet on all Nodes
-Use Namespace project-tiger for the following. Create a DaemonSet named ds-important with image httpd:2.4-alpine and labels id=ds-important and uuid=18426a0b-5f59-4e10-923f-c0e078e82462. The Pods it creates should request 10 millicore cpu and 10 mebibyte memory. The Pods of that DaemonSet should run on all nodes, master and worker.
+> Use Namespace project-tiger for the following. Create a DaemonSet named ds-important with image httpd:2.4-alpine and labels id=ds-important and uuid=18426a0b-5f59-4e10-923f-c0e078e82462.
+
+> The Pods it creates should request 10 millicore cpu and 10 mebibyte memory. The Pods of that DaemonSet should run on all nodes, master and worker.
 
 <details><summary>Show Answer</summary>
 <p>
@@ -1103,11 +1105,11 @@ ds-important-qhjcq        1/1     Running   ...   cluster1-worker2
 </details>
 
 ##  Deployment on all Nodes
-Use Namespace project-tiger for the following. Create a Deployment named deploy-important with label id=very-important (the Pods should also have this label) and 3 replicas. It should contain two containers, the first named container1 with image nginx:1.17.6-alpine and the second one named container2 with image kubernetes/pause.
+> Use Namespace project-tiger for the following. Create a Deployment named deploy-important with label id=very-important (the Pods should also have this label) and 3 replicas. It should contain two containers, the first named container1 with image nginx:1.17.6-alpine and the second one named container2 with image kubernetes/pause.
 
-There should be only ever one Pod of that Deployment running on one worker node. We have two worker nodes: cluster1-worker1 and cluster1-worker2. Because the Deployment has three replicas the result should be that on both nodes one Pod is running. The third Pod won't be scheduled, unless a new worker node will be added.
+> There should be only ever one Pod of that Deployment running on one worker node. We have two worker nodes: cluster1-worker1 and cluster1-worker2. Because the Deployment has three replicas the result should be that on both nodes one Pod is running. The third Pod won't be scheduled, unless a new worker node will be added.
 
-In a way we kind of simulate the behaviour of a DaemonSet here, but using a Deployment and a fixed number of replicas.
+> In a way we kind of simulate the behaviour of a DaemonSet here, but using a Deployment and a fixed number of replicas.
 
 <details><summary>Show Answer</summary>
 <p>
@@ -1247,15 +1249,15 @@ Warning  FailedScheduling  16s   default-scheduler  0/3 nodes are available: 1 n
 </details>
 
 ## Multi Containers and Pod shared Volume
-Create a Pod named multi-container-playground in Namespace default with three containers, named c1, c2 and c3. There should be a volume attached to that Pod and mounted into every container, but the volume shouldn't be persisted or shared with other Pods.
+> Create a Pod named multi-container-playground in Namespace default with three containers, named c1, c2 and c3. There should be a volume attached to that Pod and mounted into every container, but the volume shouldn't be persisted or shared with other Pods.
 
-Container c1 should be of image nginx:1.17.6-alpine and have the name of the node where its Pod is running available as environment variable MY_NODE_NAME.
+> Container c1 should be of image nginx:1.17.6-alpine and have the name of the node where its Pod is running available as environment variable MY_NODE_NAME.
 
-Container c2 should be of image busybox:1.31.1 and write the output of the date command every second in the shared volume into file date.log. You can use while true; do date >> /your/vol/path/date.log; sleep 1; done for this.
+> Container c2 should be of image busybox:1.31.1 and write the output of the date command every second in the shared volume into file date.log. You can use while true; do date >> /your/vol/path/date.log; sleep 1; done for this.
 
-Container c3 should be of image busybox:1.31.1 and constantly send the content of file date.log from the shared volume to stdout. You can use tail -f /your/vol/path/date.log for this.
+> Container c3 should be of image busybox:1.31.1 and constantly send the content of file date.log from the shared volume to stdout. You can use tail -f /your/vol/path/date.log for this.
 
-Check the logs of container c3 to confirm correct setup.
+> Check the logs of container c3 to confirm correct setup.
 
 <details><summary>Show Answer</summary>
 <p>
@@ -1346,13 +1348,14 @@ Sat Dec  7 16:05:16 UTC 2077
 
 ## Create Secret and mount into Pod
 
-Do the following in a new Namespace secret. Create a Pod named secret-pod of image busybox:1.31.1 which should keep running for some time. It should be able to run on master nodes as well, create the proper toleration.
+> Do the following in a new Namespace secret. Create a Pod named secret-pod of image busybox:1.31.1 which should keep running for some time. It should be able to run on master nodes as well, create the proper toleration.
 
-There is an existing Secret located at /opt/course/19/secret1.yaml, create it in the secret Namespace and mount it readonly into the Pod at /tmp/secret1.
+> There is an existing Secret located at /opt/course/19/secret1.yaml, create it in the secret Namespace and mount it readonly into the Pod at /tmp/secret1.
 
-Create a new Secret in Namespace secret called secret2 which should contain user=user1 and pass=1234. These entries should be available inside the Pod's container as environment variables APP_USER and APP_PASS.
+> Create a new Secret in Namespace secret called secret2 which should contain user=user1 and pass=1234. These entries should be available inside the Pod's container as environment variables APP_USER and APP_PASS.
 
-Confirm everything is working.
+> Confirm everything is working.
+
 <details><summary>Show Answer</summary>
 <p>
 
@@ -1479,7 +1482,7 @@ k -n secret exec secret-pod -- cat /tmp/secret1/halt
 
 ## Update Kubernetes Version and join cluster
 
-Your coworker said node cluster3-worker2 is running an older Kubernetes version and is not even part of the cluster. Update Kubernetes on that node to the exact version that's running on cluster3-master1. Then add this node to the cluster. Use kubeadm for this
+> Your coworker said node cluster3-worker2 is running an older Kubernetes version and is not even part of the cluster. Update Kubernetes on that node to the exact version that's running on cluster3-master1. Then add this node to the cluster. Use kubeadm for this
 
 <details><summary>Show Answer</summary>
 <p>
@@ -1635,15 +1638,17 @@ We see cluster3-worker2 is now available and up to date.
  
 ## NetworkPolicy
 
-There was a security incident where an intruder was able to access the whole cluster from a single hacked backend Pod.
+> There was a security incident where an intruder was able to access the whole cluster from a single hacked backend Pod.
 
-To prevent this create a NetworkPolicy called np-backend in Namespace project-snake. It should allow the backend-* Pods only to:
+> To prevent this create a NetworkPolicy called np-backend in Namespace project-snake. It should allow the backend-* Pods only to:
 
-connect to db1-* Pods on port 1111
-connect to db2-* Pods on port 2222
-Use the app label of Pods in your policy.
+> connect to db1-* Pods on port 1111
 
-After implementation, connections from backend-* Pods to vault-* Pods on port 3333 should for example no longer work.
+> connect to db2-* Pods on port 2222
+
+> Use the app label of Pods in your policy.
+
+> After implementation, connections from backend-* Pods to vault-* Pods on port 3333 should for example no longer work.
 
 <details><summary>Show Answer</summary>
 <p>
@@ -1800,12 +1805,11 @@ Also helpful to use kubectl describe on the NP to see how k8s has interpreted th
 
 ##  Etcd Snapshot Save and Restore
 
-Make a backup of etcd running on cluster3-master1 and save it on the master node at /tmp/etcd-backup.db.
+> Make a backup of etcd running on cluster3-master1 and save it on the master node at /tmp/etcd-backup.db.
 
-Then create a Pod of your kind in the cluster.
+> Then create a Pod of your kind in the cluster.
 
-Finally restore the backup, confirm the cluster is still working and that the created Pod is no longer with us.
-
+> Finally restore the backup, confirm the cluster is still working and that the created Pod is no longer with us.
 
 <details><summary>Show Answer</summary>
 <p>
@@ -1915,7 +1919,6 @@ Snapshot saved at /tmp/etcd-backup.db
 
 NOTE: Dont use snapshot status because it can alter the snapshot file and render it invalid
 
-
 ### Etcd restore
 Now create a Pod in the cluster and wait for it to be running:
 
@@ -2001,7 +2004,6 @@ No resources found in default namespace.
 </details>
 
  
-
 ## Additional Resources
 * 💬 [Kubernetes Slack Channel #certifications](https://kubernetes.slack.com/)<sup>Slack</sup>
 * 📚 [Guide to Certified Kubernetes Administrator (CKA)](https://teckbootcamps.com/cka-exam-study-guide/)<sup>Blog</sup>
