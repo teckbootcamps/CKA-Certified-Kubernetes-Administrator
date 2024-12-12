@@ -38,8 +38,7 @@ Save 30% using Coupon code **TECK30** on all the Linux Foundation training and c
 - [Additional Resources](#additional-resources)
 - [Practice](#practice)
 
-
-## CKA Exam Syllabus (Updated Kubernetes 1.31  )
+## CKA Exam Syllabus (Updated Kubernetes 1.31)
 
 | **Topic**                                 | **Concepts**                                                                                                                                                       | **Weightage** |
 |-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
